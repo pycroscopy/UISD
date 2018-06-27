@@ -17,8 +17,9 @@ Documentation Index
 
 .. toctree::
    :maxdepth: 2
-    data_format
-    index
+
+   data_format
+   index
 
 
 
