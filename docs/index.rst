@@ -1,13 +1,12 @@
 .. USID documentation master file, created by
-   sphinx-quickstart on Fri Jun 22 08:12:01 2018.
+   sphinx-quickstart on Wed Jun 27 10:37:14 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
 Welcome to USID's documentation!
-==================================
-**Universal Spectroscopic and Imaging Data (USID)**
-
+================================
 Jump to our `GitHub project page <https://github.com/pycroscopy/USID>`_
+
 
 Documentation Index
 -------------------
@@ -18,6 +17,8 @@ Documentation Index
 
 .. toctree::
     data_format
+    index
+
 
 
 Indices and tables
