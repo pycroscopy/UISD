@@ -16,6 +16,7 @@ Documentation Index
    :template: module.rst
 
 .. toctree::
+   :maxdepth: 2
     data_format
     index
 
