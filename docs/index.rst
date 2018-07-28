@@ -18,7 +18,7 @@ Documentation Index
 .. toctree::
    :maxdepth: 2
 
-   data_format
+   usid_model
    index
 
 
