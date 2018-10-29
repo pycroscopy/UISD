@@ -22,6 +22,7 @@ Documentation Index
    nomenclature
    usid_model
    file_format
+   auto_examples/index
    h5_usid
    advanced_topics
    index
