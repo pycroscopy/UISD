@@ -156,7 +156,7 @@ data would be a ``1 x S`` matrix. The ``quantity`` represented in this data woul
 
 .. note::
     After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
-    explore `this interactive example <./auto_examples/usid_representation/plot_1D_spectrum.html>`_ on actual data.
+    explore `this interactive example <./auto_examples/plot_1D_spectrum.html>`_ on actual data.
 
 Gray-scale images
 ~~~~~~~~~~~~~~~~~
@@ -175,14 +175,14 @@ captured. The sequence in this particular case is debatable in this particular e
 
 .. note::
     After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
-    explore `this interactive example <./auto_examples/usid_representation/plot_2D_image.html>`_ on actual data.
+    explore `this interactive example <./auto_examples/plot_2D_image.html>`_ on actual data.
 
 Popular examples of such data include imaging data from raster scans (e.g. - height channel in atomic force microscopy),
 black-and-white photographs, scanning electron microscopy (SEM) images. etc.
 
 .. note::
     After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
-    explore `this interactive example <./auto_examples/usid_representation/plot_2D_image_stack.html>`_ on actual data.
+    explore `this interactive example <./auto_examples/plot_2D_image_stack.html>`_ on actual data.
 
 Color images will be discussed separately below due to some very important subtleties about the
 measurement.
@@ -209,7 +209,7 @@ current-voltage spectroscopy
 
 .. note::
     After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
-    explore `this interactive example <./auto_examples/usid_representation/plot_3D_spectral_image.html>`_ on actual data.
+    explore `this interactive example <./auto_examples/plot_3D_spectral_image.html>`_ on actual data.
 
 High dimensional data
 ~~~~~~~~~~~~~~~~~~~~~
@@ -449,7 +449,7 @@ value, the ``Position Indices`` and ``Position Values`` datasets would have a sh
 
 .. note::
     The interested reader is recommended to explore
-    `this interactive example <./auto_examples/usid_representation/plot_1D_spectrum.html>`_ on actual data.
+    `this interactive example <./auto_examples/plot_1D_spectrum.html>`_ on actual data.
 
 Gray-scale image
 ~~~~~~~~~~~~~~~~
@@ -529,7 +529,7 @@ Similar to the ``position dimensions`` for a spectrum, gray-scale images only ha
 
 .. note::
     The interested reader is recommended to
-    explore `this interactive example <./auto_examples/usid_representation/plot_2D_image.html>`_ on actual data.
+    explore `this interactive example <./auto_examples/plot_2D_image.html>`_ on actual data.
 
 Spectral maps
 ~~~~~~~~~~~~~
@@ -588,7 +588,7 @@ If the dataset was varied over ``3`` values of *X*, ``2`` values of *Y* and ``5`
 
 .. note::
     The interested reader is recommended to
-    explore `this interactive example <./auto_examples/usid_representation/plot_3D_spectral_image.html>`_ on actual data.
+    explore `this interactive example <./auto_examples/plot_3D_spectral_image.html>`_ on actual data.
 
 High dimensional data
 ~~~~~~~~~~~~~~~~~~~~~
