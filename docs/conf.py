@@ -46,7 +46,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
-    #'sphinx_gallery.gen_gallery',
+    'sphinx_gallery.gen_gallery',
     'sphinx.ext.napoleon',          # Use either napoleon or numpydoc not both.
     # 'numpydoc',
     # 'sphinx.ext.githubpages',
@@ -246,9 +246,30 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/{.major}'.format(sys.version_info), None),
+                       'numpy': ('https://docs.scipy.org/doc/numpy/', None),
+                       'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
+                       'matplotlib': ('https://matplotlib.org/', None),
+                       'sklearn': ('http://scikit-learn.org/stable', None),
+                       'sphinx': ('http://www.sphinx-doc.org/en/stable', None),
+                       }
 
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+from sphinx_gallery.sorting import ExampleTitleSortKey, ExplicitOrder  # Can't use until next release of sphinx-gallery
+# Sphinx-gallery configuration
+sphinx_gallery_conf = dict(examples_dirs=['../examples'],
+                           gallery_dirs=['auto_examples'],
+                           within_subsection_order=ExampleTitleSortKey,
+                           reference_url=dict(pyUSID=None,
+                                              matplotlib='https://matplotlib.org',
+                                              numpy='https://docs.scipy.org/doc/numpy',
+                                              scipy='https://docs.scipy.org/doc/scipy/reference',
+                                              h5py='http://docs.h5py.org/en/latest/'),
+                           # directory where function granular galleries are stored
+                           backreferences_dir='_autosummary/backreferences',
+                           # Modules for which function level galleries are created.
+                           doc_module='pyUSID')
