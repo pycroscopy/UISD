@@ -17,29 +17,27 @@ However, in most cases, there were some important shortcomings which made it inf
 Below, we list some of the many solutions we explored. In many cases, the data schema / model is tied very closely with the file format.
 In general, we observed two basic kinds of existing data models:
 
-#. **Text**
+#. **Text** - Most of these are markup language based:
 
-   #. Markup language based
-
-      #. `SPMML <https://aip.scitation.org/doi/pdf/10.1063/1.1639706>`_
-      #. `MatML <https://www.matml.org/downloads/matml_data.pdf>`_
-#. Image
-
-   #. OME-TIFF
-#. Binary
+   #. `Scanning Probe Microscopy Markup Language (SPMML) <https://aip.scitation.org/doi/pdf/10.1063/1.1639706>`_
+   #. `MatML <https://www.matml.org/downloads/matml_data.pdf>`_
+#. **Binary**
 
    #. HDF5-based
 
       #. `NeXus <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4453170/>`_
       #. `Data Exchange <https://pdfs.semanticscholar.org/1c12/fdeb6f428f73e5974da0f0f3aca6d09d163e.pdf>`_
       #. `Multidimensional eXtensible Archive (MXA) <http://iopscience.iop.org/article/10.1088/0965-0393/18/6/065008/meta>`_
-      #. `Electron Microscopy Data (EMD) Elecrton microscopy data HDF5>`_
+      #. `Electron Microscopy Data (EMD) <https://emdatasets.com/format/>`_
       #. `PaNData <https://eudat.eu/sites/default/files/PaNdata_0.pdf>`_
       #. `Format used by HyperSpy <http://hyperspy.org/hyperspy-doc/current/user_guide/io.html#hspy-hyperspy-s-hdf5-specification>`_
       #. `Format used by DREAM.3D <https://link.springer.com/article/10.1186/2193-9772-3-5>`_
    #. Other
 
       #. `HMSA <https://www.microscopy.org/resources/HMSA_Specification.pdf>`_
+#. **Image**
+
+   #. OME-TIFF
 
 Most of these models were designed rigidly around specific class of instruments, specific modalities, coordinate systems (Cartesian only with
 no option for polar coordinates etc.), or for specific scientific communities such as the climate research, X-ray microscopy, etc.
