@@ -1,5 +1,5 @@
-Data Model and File Format
-==========================
+Data Schema
+===========
 
 **Suhas Somnath**
 
@@ -7,7 +7,54 @@ Data Model and File Format
 
 .. contents::
 
-Information in **Universal Spectroscopy and Imaging Data (USID)** files are stored in three main kinds of datasets:
+Existing data schemas
+---------------------
+No one really wants yet another data schema or file format in their lives.
+Like everyone else, we wanted to adopt a framework put together by other experts who had thought long and hard about the challenges.
+We explored the feasibility of several data models and file formats from within and beyond imaging and microscopy.
+However, in most cases, there were some important shortcomings which made it infeasible for us to adopt existing solutions.
+
+Below, we list some of the many solutions we explored. In many cases, the data schema / model is tied very closely with the file format.
+In general, we observed two basic kinds of existing data models:
+
+#. **Text**
+
+   #. Markup language based
+
+      #. `SPMML <https://aip.scitation.org/doi/pdf/10.1063/1.1639706>`_
+      #. `MatML <https://www.matml.org/downloads/matml_data.pdf>`_
+#. Image
+
+   #. OME-TIFF
+#. Binary
+
+   #. HDF5-based
+
+      #. `NeXus <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4453170/>`_
+      #. `Data Exchange <https://pdfs.semanticscholar.org/1c12/fdeb6f428f73e5974da0f0f3aca6d09d163e.pdf>`_
+      #. `Multidimensional eXtensible Archive (MXA) <http://iopscience.iop.org/article/10.1088/0965-0393/18/6/065008/meta>`_
+      #. `Electron Microscopy Data (EMD) Elecrton microscopy data HDF5>`_
+      #. `PaNData <https://eudat.eu/sites/default/files/PaNdata_0.pdf>`_
+      #. `Format used by HyperSpy <http://hyperspy.org/hyperspy-doc/current/user_guide/io.html#hspy-hyperspy-s-hdf5-specification>`_
+      #. `Format used by DREAM.3D <https://link.springer.com/article/10.1186/2193-9772-3-5>`_
+   #. Other
+
+      #. `HMSA <https://www.microscopy.org/resources/HMSA_Specification.pdf>`_
+
+Most of these models were designed rigidly around specific class of instruments, specific modalities, coordinate systems (Cartesian only with
+no option for polar coordinates etc.), or for specific scientific communities such as the climate research, X-ray microscopy, etc.
+We found models tied to plain-text-based file formats of data limiting, especially in the age of large multidimensional datasets.
+While most of the data models tied to binary file formats can certainly represent the vast majority of data, we found all of them lacking
+in one critically important area – none besides HMSA can represent large datasets without an N-dimensional form. Furthermore, most models
+also assume experimental variables would only be varied in a linearly increasing or decreasing manner for all dimensions. Such models would
+preclude the representation of those modalities where a variable was varied as a sine or a bipolar triangle. The closest and most general
+model we found was the HMSA. While compromising user-friendliness for ultimate generalization is acceptable, the vulnerability of this model
+is not – the potential separation or loss of the metadata file from the data file would render the dataset useless.
+
+USID
+----
+
+Information in **USID** are stored in three main kinds of datasets:
 
 #. ``Main`` datasets that contain the raw measurements recorded from
    the instrument as well as results from processing or analysis routines
@@ -16,23 +63,23 @@ Information in **Universal Spectroscopy and Imaging Data (USID)** files are stor
    ``main`` data
 #. ``Extra`` datasets store any other data that may be of value
 
-In addition to datasets, the data model is highly reliant on metadata that capture
+In addition to datasets, the data schema is highly reliant on metadata that capture
 smaller pieces but critical pieces of information such as the
 ``quantity`` and ``units`` that describe every data point in the ``main`` dataset.
 
-**We acknowledge that this data model is not trivial to understand at first glance but we are making every effort
+**We acknowledge that this data schema is not trivial to understand at first glance but we are making every effort
 to make is simple to understand. If you ever find anything complicated or unclear, please** `write to us <./contact.html>`_
 **and we will improve our documentation.**
 
 ``Main`` Datasets
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Regardless of origin, modality or complexity, imaging data (and most scientific data for that matter) have one
 thing in common:
 
 **The same measurement / operation is performed at each spatial position**
 
-The **USID** model is based on this one simple ground-truth.
+The **USID** schema is based on this one simple ground-truth.
 The data always has some ``spatial dimensions`` (X, Y, Z) and some
 ``spectroscopic dimensions`` (time, frequency, intensity, wavelength,
 temperature, cycle, voltage, etc.). **In USID, the spatial
@@ -60,7 +107,7 @@ the positions and ``j`` for spectroscopic:
 
 A notion of chronology is attached to both the position and spectroscopic axes.
 In other words, the data for the second location (second row in the above table)
-was acquired before the first location (first row). The same applies to the spectroscopic axis as well.
+was acquired after the first location (first row). The same applies to the spectroscopic axis as well.
 This is an important point to remember especially when information is recorded
 from multiple sources or channels (e.g. - data from different sensors) or if two or more numbers are **necessary** to
 give a particular observation / data point its correct meaning (e.g. - color images).
@@ -98,7 +145,7 @@ Here are some examples of how some familiar data can be represented using
 this paradigm:
 
 Spectrum
-^^^^^^^^
+~~~~~~~~
 .. image:: ./assets_USID/1D_spectra.svg
 
 This case encompasses examples such as a **single** Raman spectrum, force-distance curve in
@@ -109,8 +156,12 @@ function of a single variable (``spectroscopic dimension``) such as *wavelength*
 Thus, if the spectrum contained ``S`` data points, the **USID** representation of this
 data would be a ``1 x S`` matrix. The ``quantity`` represented in this data would be **Amplitude**.
 
+.. note::
+    After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
+    explore `this interactive example <./auto_examples/usid_representation/plot_1D_spectrum.html>`_ on actual data.
+
 Gray-scale images
-^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~
 .. image:: ./assets_USID/2D_images.svg
 
 In such data, a single value (``quantity`` is *intensity*) in is recorded
@@ -118,20 +169,28 @@ at each location in a two dimensional grid. Thus, there are are two
 ``position dimensions`` - *X*, *Y*. The value at each pixel was not really acquired
 as a function of any variable so the data has one *arbitrary* ``spectroscopic dimension``.
 Thus, if the image had ``P`` rows and ``Q`` columns, it would have to be flattened and
-represented as a ``P*Q x 1`` array according to the **USID** model. The second
+represented as a ``P*Q x 1`` array according to the **USID** schema. The second
 axis has size of 1 since we only record one value (intensity) at each
 location. In theory, the flattened data could be arranged column-by-column (as in the figure above)
 and then row-by-row or vice-versa depending on how the data was (sequentially)
 captured. The sequence in this particular case is debatable in this particular example.
 
+.. note::
+    After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
+    explore `this interactive example <./auto_examples/usid_representation/plot_2D_image.html>`_ on actual data.
+
 Popular examples of such data include imaging data from raster scans (e.g. - height channel in atomic force microscopy),
 black-and-white photographs, scanning electron microscopy (SEM) images. etc.
+
+.. note::
+    After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
+    explore `this interactive example <./auto_examples/usid_representation/plot_2D_image_stack.html>`_ on actual data.
 
 Color images will be discussed separately below due to some very important subtleties about the
 measurement.
 
 Spectral maps
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 .. image:: ./assets_USID/3D_map_of_spectra.svg
 
 If a spectrum of length ``S`` were acquired at each location in a two dimensional grid of positions
@@ -150,8 +209,12 @@ Assuming that the data was acquired column-by-column and then row-by-row, the ro
 Popular examples of such datasets include Scanning Tunnelling Spectroscopy (STS) and
 current-voltage spectroscopy
 
+.. note::
+    After going through the corresponding discussion about ``Ancillary`` datasets, the interested reader is recommended to
+    explore `this interactive example <./auto_examples/usid_representation/plot_3D_spectral_image.html>`_ on actual data.
+
 High dimensional data
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 This general representation for data was developed to express datasets with 7, 8, 9, or higher dimensional datasets.
 
 The **spectral map** example above only had one ``spectroscopic dimension``. If spectra of length ``S`` were
@@ -166,7 +229,7 @@ This four dimensional dataset would be flattened into a two dimensional array of
 In the same manner, one could keep adding additional dimensions to either the position or spectroscopic axis.
 
 Non Measurements
-^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~
 This same flattened representation can also be applied to results of data analyses or
 data that were not directly recorded from an instrument. Here are some examples:
 
@@ -180,14 +243,13 @@ data that were not directly recorded from an instrument. Here are some examples:
    ``Non-negative matrix factorization (NMF)``
 
 Complicated?
-^^^^^^^^^^^^^
-This data model may seem unnecessarily complicated for very simple / rigid data such as 2D images or 1D spectra.
+~~~~~~~~~~~~
+This data schema may seem unnecessarily complicated for very simple / rigid data such as 2D images or 1D spectra.
 However, bear in mind that **this paradigm was designed to represent any information regardless of dimensionality, origin, complexity**, etc.
 Thus, encoding data in this manner will allow seamless sharing, exchange, and interpretation of data.
 
-Compound Datasets:
-^^^^^^^^^^^^^^^^^^
-
+Compound Datasets
+~~~~~~~~~~~~~~~~~
 There are instances where multiple values are associate with a
 single position and spectroscopic value in a dataset.  In these cases,
 we use the `compound dataset functionality in HDF5 <https://support.hdfgroup.org/HDF5/Tutor/compound.html>`_
@@ -233,7 +295,7 @@ and utility of compound datasets are best described with examples:
   fit should actually be a ``N x 1`` dataset where each element is a compound
   value made up of the ``S`` coefficients. Note that while some form of sequence
   can be forced onto the coefficients if the spectra were fit to polynomial
-  functions, the drawbacks outweigh the benefits:
+  functions, the benefits outweigh the drawbacks:
 
   * **Slicing**: Storing data in compound datasets circumvents problems associated
     with getting a specific / the ``kth`` coefficient if the data were stored in a
@@ -254,8 +316,35 @@ For more information on compound datasets see the
 `h5py Datasets documentation <http://docs.h5py.org/en/latest/high/dataset.html#reading-writing-data>`_
 from the HDF Group.
 
+Videos
+~~~~~~
+While USID provides an unambiguous and single solution for representing data, videos come into a gray area with two
+plausible solutions rather than one. A video with ``S`` frames each containing an image of shape ``U x V`` can be
+represented in USID either as a ``S x UV`` dataset or a ``UV x S`` dataset.
+
+Those who strictly believe that the data for the ``N+1`` th observation (row in the USID ``Main`` dataset) is always
+acquired after all the data for the ``N`` th observation (row in the USID ``Main`` dataset) may prefer the ``S x UV``
+form. In other words, at time ``t = 0``, a 2D image of shape ``U x V`` is acquired. Subsequently, the next observation
+is at time ``t = 1`` when another 2D image is acquired. The chronology of the observations (frames in the movie) are
+indisputable. Thus, the data within each observation (``U x V`` image) would need to be flattened along the *horizontal*
+axis per the examples above. The observations (frames in the movie) themselves would be stacked along the *vertical*
+axis. This representation would confuse the reader since the ``Position`` and ``Spectroscopic`` dimensions are switched.
+Here, the *physical* position dimensions of the camera sensor (``U`` and ``V``) would actually be the spectroscopic
+dimensions in USID whereas time, which is typically a spectroscopic dimension in USID is treated as a Position dimension
+instead. We believe that this would be the correct representation of a movie in USID.
+We were very much aware of this potential problem and were originally planning on adopting the vocabulary used by the
+data science community of ``Instance`` or ``Example`` and ``Features``. However, we realize that users not familiar
+with this nomenclature may be confused.
+
+Those who prefer to think of movies as maps of spectra may prefer the ``UV x S`` representation. However, the chronology
+would be misrepresented or lost in such a USID representation. Nonetheless, such people may argue that this
+representation is more in line with convention although it is at odds with the rules laid by USID.
+
+The above philosophies would still hold true regardless of whether the data recorded at each time step were a 2D image,
+a 1D spectrum or a N-dimensional hypercube.
+
 ``Ancillary`` Datasets
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 So far we have explained how the (``main``) dataset of interest can be flattened and represented
 regardless of its origin, size, dimensionality, etc. In order to make this
@@ -303,12 +392,12 @@ each containing ``P`` spectral values (shape = (``N x P``)), and having
 
 * The ``Position Indices`` and ``Position Values`` datasets would both of the
   same size of ``N x U``, where ``U`` is the number of ``position
-  dimensions``. The **columns would be arranged in ascending order of rate of
+  dimensions``. The **columns would be arranged in descending order of rate of
   change**. In other words, the first column would be the fastest changing
   position dimension and the last column would be the slowest. **Each position dimension gets it's own column**.
 
 * The ``Spectroscopic Values`` and ``Spectroscopic Indices`` dataset would
-  both be ``V x S`` in shape, where ``V`` is the number of ``spectroscopic
+  both be ``V x P`` in shape, where ``V`` is the number of ``spectroscopic
   dimensions``. Similarly to the ``position dimensions``, the first row would be
   the fastest changing ``spectroscopic dimension`` while the last row would be
   the slowest varying dimension. **Each spectroscopic dimension gets it's own row**.
@@ -317,8 +406,8 @@ The ``ancillary`` datasets are better illustrated via a few examples. We will
 be continuing with the same examples used when illustrating the ``main`` dataset.
 
 Spectrum
-^^^^^^^^^
-Let's assume that data points were collected as a function of 8 values of the (sole) variable / ``spectroscopic dimension`` -
+~~~~~~~~
+Let's assume that data points were collected as a function of 5 values of the (sole) variable / ``spectroscopic dimension`` -
 *Frequency*.  In that case, the ``Spectroscopic Values`` dataset would be of size ``1 x 5`` (one row for the single
 ``spectroscopic dimension`` and eight columns for each of the reference *Frequency* steps.
 Let's assume that the data was collected as a function of *Frequency* over a band ranging from ``300`` to ``320`` kHz.
@@ -360,8 +449,12 @@ value, the ``Position Indices`` and ``Position Values`` datasets would have a sh
 | 0.0      |
 +----------+
 
+.. note::
+    The interested reader is recommended to explore
+    `this interactive example <./auto_examples/usid_representation/plot_1D_spectrum.html>`_ on actual data.
+
 Gray-scale image
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~
 A simple gray-scale image with ``X`` pixels in the horizontal and ``Y`` pixels in the vertical
 direction would have ancillary position
 datasets of shape ``X*Y x 2``. The first column in the ancillary position
@@ -436,8 +529,12 @@ Similar to the ``position dimensions`` for a spectrum, gray-scale images only ha
 | **arb.**  | 0   |
 +-----------+-----+
 
+.. note::
+    The interested reader is recommended to
+    explore `this interactive example <./auto_examples/usid_representation/plot_2D_image.html>`_ on actual data.
+
 Spectral maps
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 Let's continue the example on **spectral maps**, which has two ``position
 dimensions`` - *X* and *Y*, and one ``spectroscopic dimension`` - *Frequency*.
 If the dataset was varied over ``3`` values of *X*, ``2`` values of *Y* and ``5`` values of *Frequency*, the
@@ -491,14 +588,18 @@ If the dataset was varied over ``3`` values of *X*, ``2`` values of *Y* and ``5`
 | **Frequency** | 300 | 305 | 310 | 315 | 320 |
 +---------------+-----+-----+-----+-----+-----+
 
+.. note::
+    The interested reader is recommended to
+    explore `this interactive example <./auto_examples/usid_representation/plot_3D_spectral_image.html>`_ on actual data.
+
 High dimensional data
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 Continuing with the expansion of the **spectral maps** example - if the data was recorded as a function of ``3``
 *Temperatures* in addition to recording data as a function of *Frequency* as in the above example, we wold have two
 ``spectroscopic dimensions`` - *Frequency*, and *Temperature*. Thus, the ``ancillary spectroscopic`` datasets would
 now have a shape of ``2 x 5*3`` instead of the simpler ``1 x 5``. The value ``2`` on the first index corresponds to
 the two ``spectroscopic dimensions`` and the longer (``15`` instead of ``5``) second axis corresponds to the fact
-that the spectra is now recorded thrice at each position (once for each *Frequency*). Assuming that the *Frequency*
+that the spectra is now recorded thrice at each *Temperature* (once for each *Frequency*). Assuming that the *Frequency*
 varies faster than the *Temperature* dimension (i.e.- the *Frequency* is varied from ``300`` to ``320`` for a
 *Temperature* of ``30 C``, **then** the *Frequency* is varied from ``300`` to ``320`` for a *Temperature* of ``40 C``
 and so on), the ``Spectroscopic Indices`` would be as follows:
@@ -526,11 +627,11 @@ two ``spectroscopic dimensions`` (two rows in the ``Spectroscopic Indices`` data
 dataset)
 
 In the same manner, additional dimensions can be added to the ``main`` and appropriate ``ancillary`` datasets
-thus proving that this data model can indeed accommodate data of any size, complexity, or dimensionality.
+thus proving that this data schema can indeed accommodate data of any size, complexity, or dimensionality.
 
 Channels
-~~~~~~~~~
-The **USID** model also allows the representation and capture of **information acquired
+--------
+The **USID** schema also allows the representation and capture of **information acquired
 simultaneously from multiple sources** through ``Channels``.
 Each ``Channel`` would contain a **separate** ``main`` dataset. ``Ancillary`` datasets
 can be shared across channels if the position or spectroscopic dimensions are identical.
