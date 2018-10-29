@@ -18,13 +18,16 @@ Documentation Index
 .. toctree::
    :maxdepth: 2
 
+   motivation
+   nomenclature
    usid_model
+   file_format
+   h5_usid
+   advanced_topics
    index
 
-
-
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
