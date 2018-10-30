@@ -56,5 +56,5 @@ Site index
    h5_usid
    metadata
    advanced_topics
-
+   faq
 * :ref:`search`
