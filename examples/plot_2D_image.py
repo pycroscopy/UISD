@@ -96,7 +96,7 @@ axis.set_title('Image of shape: {}'.format(orig_image.shape))
 # Here, we will simply download the file using ``wget``:
 
 h5_path = 'temp.h5'
-url = 'https://raw.githubusercontent.com/pycroscopy/pyUSID/master/data/simulated_STEM_Image.h5'
+url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/simulated_STEM_Image.h5'
 if os.path.exists(h5_path):
     os.remove(h5_path)
 _ = wget.download(url, h5_path, bar=None)
