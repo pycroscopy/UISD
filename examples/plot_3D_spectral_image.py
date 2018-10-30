@@ -10,13 +10,13 @@
 **This example illustrates how a 3D spectral image would be represented in the Universal Spectroscopy and
 Imaging Data (USID) schema and stored in a Hierarchical Data Format (HDF5) file, also referred to as the h5USID file.**
 
-This document is intended as a supplement to the explanation about the `USID data model <../../data_format.html>`_
+This document is intended as a supplement to the explanation about the `USID data model <../usid_model.html>`_
 
 Please consider downloading this document as a Jupyter notebook using the button at the bottom of this document.
 
 Prerequisites:
 --------------
-We recommend that you read about the `USID data model <../../data_format.html>`_
+We recommend that you read about the `USID data model <../usid_model.html>`_
 
 We will be making use of the ``pyUSID`` package at multiple places to illustrate the central point. While it is
 recommended / a bonus, it is not absolutely necessary that the reader understands how the specific ``pyUSID`` functions
@@ -68,16 +68,16 @@ except ImportError:
 # dimensional grid of spatial locations. Thus, this is a three dimensional dataset that has been flattened to a two
 # dimensional matrix in accordance with **Universal Spectroscopy and Imaging Data (USID)** model.
 #
-# As mentioned earlier, this dataset is available on the pyUSID repository and can be accessed directly as well.
+# As mentioned earlier, this dataset is available on the USID repository and can be accessed directly as well.
 # Here, we will simply download the file using ``wget``:
 #
 # Download from GitHub
 # ~~~~~~~~~~~~~~~~~~~~~
-# Similarly the corresponding h5USID dataset is also available on the pyUSID repository.
+# Similarly the corresponding h5USID dataset is also available on the USID repository.
 # Here, we will simply download the file using ``wget``:
 
 h5_path = 'temp.h5'
-url = 'https://raw.githubusercontent.com/pycroscopy/pyUSID/master/data/BELine_0004.h5'
+url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/BELine_0004.h5'
 if os.path.exists(h5_path):
     os.remove(h5_path)
 _ = wget.download(url, h5_path, bar=None)
@@ -86,24 +86,24 @@ _ = wget.download(url, h5_path, bar=None)
 # Open the file
 # ~~~~~~~~~~~~~
 # Lets open the file and look at its contents using
-# `pyUSID.hdf_utils.print_tree() <../beginner/plot_hdf_utils_read.html#print-tree>`_
+# `pyUSID.hdf_utils.print_tree() <../../pyUSID/auto_examples/beginner/plot_hdf_utils_read.html#print-tree>`_
 h5_file = h5py.File(h5_path, mode='r')
 usid.hdf_utils.print_tree(h5_file)
 
 ########################################################################################################################
 # Access the ``Main`` Dataset
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Clearly, this file contains a single `Measurement` which has a single `Channel <///../data_format.html#channels>`_.
-# We can access the `Main Dataset <../../data_format.html#main-datasets>`_ where all the information is located in
+# Clearly, this file contains a single `Measurement` which has a single `Channel <../usid_model.html#channels>`_.
+# We can access the `Main Dataset <../usid_model.html#main-datasets>`_ where all the information is located in
 # multiple ways. Given that this file contains just a single ``Main Dataset`` we can conveniently use the
-# `pyUSID.hdf_utils.get_all_main() <../beginner/plot_hdf_utils_read.html#get-all-main>`_ function.
+# `pyUSID.hdf_utils.get_all_main() <../../pyUSID/auto_examples/beginner/plot_hdf_utils_read.html#get-all-main>`_ function.
 h5_main = usid.hdf_utils.get_all_main(h5_file)[-1]
 print(h5_main)
 
 ########################################################################################################################
-# Here, ``h5_main`` is a `USIDataset <../beginner/plot_usi_dataset.html>`_, which can be thought of as a supercharged
+# Here, ``h5_main`` is a `USIDataset <../../pyUSID/auto_examples/beginner/plot_usi_dataset.html>`_, which can be thought of as a supercharged
 # HDF5 Dataset that is not only aware of the contents of the plain ``Raw_Data`` dataset but also its links to the
-# `Ancillary Datasets <../../data_format.html#ancillary-datasets>`_ that make it a ``Main Dataset``.
+# `Ancillary Datasets <../usid_model.html#ancillary-datasets>`_ that make it a ``Main Dataset``.
 #
 # Understanding Dimensionality
 # ----------------------------
@@ -112,7 +112,7 @@ print(h5_main)
 # values of the single ``Spectroscopic Dimension`` - ``Frequency``.
 # Therefore, this dataset is a 3D dataset with two position dimensions and one spectroscopic dimension.
 # To verify this, we can easily get the N-dimensional form of this dataset by invoking the
-# `get_n_dim_form() <../beginner/plot_usi_dataset.html#reshaping-to-n-dimensions>`_ of the ``USIDataset`` object:
+# `get_n_dim_form() <../../pyUSID/auto_examples/beginner/plot_usi_dataset.html#reshaping-to-n-dimensions>`_ of the ``USIDataset`` object:
 
 print(h5_main.get_n_dim_form().shape)
 print(h5_main.n_dim_labels)
@@ -132,7 +132,7 @@ print(h5_main.n_dim_labels)
 # Visualize the ``Main`` Dataset
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Now lets visualize the contents within this ``Main Dataset`` using the ``USIDataset's`` built-in
-# `visualize() <../beginner/plot_usi_dataset.html#interactive-visualization>`_ function.
+# `visualize() <../../pyUSID/auto_examples/beginner/plot_usi_dataset.html#interactive-visualization>`_ function.
 #
 # Note that the visualization below is static. However, if this document were downloaded as a jupyter notebook, you
 # would be able to interactively visualize this dataset.

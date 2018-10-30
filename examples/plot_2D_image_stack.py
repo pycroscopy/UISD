@@ -13,13 +13,13 @@ This example is based on the popular Atomic Force Microscopy scan mode where mul
 a value at each position on a 2D grid, thereby resulting in a 2D image per sensor. Specifically, the goal of this
 example is to demonstrate the sharing of ``Ancillary`` datasets among multiple ``Main`` datasets.
 
-This document is intended as a supplement to the explanation about the `USID data model <../../data_format.html>`_
+This document is intended as a supplement to the explanation about the `USID data model <../usid_model.html>`_
 
 Please consider downloading this document as a Jupyter notebook using the button at the bottom of this document.
 
 Prerequisites:
 --------------
-We recommend that you read about the `USID data model <../../data_format.html>`_
+We recommend that you read about the `USID data model <../usid_model.html>`_
 
 We will be making use of the ``pyUSID`` package at multiple places to illustrate the central point. While it is
 recommended / a bonus, it is not absolutely necessary that the reader understands how the specific ``pyUSID`` functions
@@ -37,8 +37,6 @@ import sys
 import os
 from warnings import warn
 import h5py
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 def install(package):
@@ -66,10 +64,10 @@ except ImportError:
 ########################################################################################################################
 # Download the dataset
 # ---------------------
-# As mentioned earlier, this image is available on the pyUSID repository and can be accessed directly as well.
+# As mentioned earlier, this image is available on the USID repository and can be accessed directly as well.
 # Here, we will simply download the file using ``wget``:
 h5_path = 'temp.h5'
-url = 'https://raw.githubusercontent.com/pycroscopy/pyUSID/master/data/SingFreqPFM_0003.h5'
+url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/SingFreqPFM_0003.h5'
 if os.path.exists(h5_path):
     os.remove(h5_path)
 _ = wget.download(url, h5_path, bar=None)
@@ -78,14 +76,14 @@ _ = wget.download(url, h5_path, bar=None)
 # Open the file
 # -------------
 # Lets open the file and look at its contents using
-# `pyUSID.hdf_utils.print_tree() <../beginner/plot_hdf_utils_read.html#print-tree>`_
+# `pyUSID.hdf_utils.print_tree() <../../pyUSID/auto_examples/beginner/plot_hdf_utils_read.html#print-tree>`_
 
 h5_file = h5py.File(h5_path, mode='r')
 usid.hdf_utils.print_tree(h5_file)
 
 ########################################################################################################################
-# Notice that this file has multiple `Channels </../../data_format.html#channels>`_, each with a dataset named
-# ``Raw_Data``. Are they all `Main </../../data_format.html#main-datasets>`_ datasets?
+# Notice that this file has multiple `Channels </../usid_model.html#channels>`_, each with a dataset named
+# ``Raw_Data``. Are they all `Main </../usid_model.html#main-datasets>`_ datasets?
 # There are multiple ways to find out this. One approach is simply to ask pyUSID to list out all available ``Main``
 # datasets.
 #
@@ -140,7 +138,7 @@ for main_dset in usid.hdf_utils.get_all_main(h5_file):
 # Visualizing the contents within each channel
 # --------------------------------------------
 # Now lets visualize the contents within this ``Main Dataset`` using the ``USIDataset's`` handy built-in
-# `visualize() <../beginner/plot_usi_dataset.html#interactive-visualization>`_ function.
+# `visualize() <../../pyUSID/auto_examples/beginner/plot_usi_dataset.html#interactive-visualization>`_ function.
 
 usid.plot_utils.use_nice_plot_params()
 for main_dset in usid.hdf_utils.get_all_main(h5_file):
