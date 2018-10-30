@@ -47,6 +47,7 @@ Site index
 .. toctree::
    :maxdepth: 1
 
+   index
    motivation
    nomenclature
    usid_model
@@ -55,5 +56,5 @@ Site index
    h5_usid
    metadata
    advanced_topics
-   index
+
 * :ref:`search`
