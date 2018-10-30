@@ -5,12 +5,14 @@ Data Schema
 
 8/8/2017
 
-In this main document we describe how imaging and spectroscopy data can be structured in the **Universal Spectroscopy and Imaging Data (USID)** schema
+In this main document we describe how imaging and spectroscopy data can be structured in the **Universal Spectroscopy and Imaging Data (USID)** schema.
+We have a separate document on `specifications <./h5_usid.html>`_ that describes how this abstract data schema can be
+incorporated and used in `hierarchical data format <./file_format.html>`_ (**HDF5**) files
 
 `Alex Belianinonv <https://www.ornl.gov/staff-profile/alex-belianinov>`_ and
 `Stephen Jesse <https://scholar.google.com/citations?user=uiTAx2cAAAAJ&hl=en>`_,
 conceived the central theme of **USID** while Suhas Somnath and Chris R. Smith developed subsequent versions and refinements
-of **USID** and developed the `specifications <./h5_usid.html>`_ for implementing **USID** in `hierarchical data format <./file_format.html>`_ (**HDF5**) files
+of **USID** and developed the `specifications <./h5_usid.html>`_ for implementing **USID** in `HDF5 <./file_format.html>`_ files
 
 .. contents::
 
