@@ -24,8 +24,9 @@ and we intend to make necessary changes to satisfy all the recommendations put f
 Related projects
 ----------------
 * `pyUSID <../pyUSID/about.html>`_ provides a convenient python interface to read and write to h5USID files.
+
 * `pycroscopy <../pycroscopy/about.html>`_  has several tools for `translating <../pycroscopy/translators.html>`_ data
-  from proprietary files generated from popular microscopes into h5USID files
+  from proprietary files generated from popular scanning probe and scanning transmission electron microscopes into h5USID files
 
 More information
 ----------------
