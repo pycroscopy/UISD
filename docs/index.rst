@@ -21,10 +21,12 @@ where appropriate, in addition to links created between the data source and the 
 Despite the fact that it was developed independently, h5USID already satisfies most of the requirements of FAIR principles
 and we intend to make necessary changes to satisfy all the recommendations put forward in the FAIR principles.
 
-Related projects
-----------------
+Using h5USID files
+------------------
 * `pyUSID <../pyUSID/about.html>`_ provides a convenient python interface to read and write to h5USID files.
 
+Related projects
+----------------
 * `pycroscopy <../pycroscopy/about.html>`_  has several tools for `translating <../pycroscopy/translators.html>`_ data
   from proprietary files generated from popular scanning probe and scanning transmission electron microscopes into h5USID files
 
