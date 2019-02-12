@@ -16,7 +16,7 @@ Please consider downloading this document as a Jupyter notebook using the button
 
 Prerequisites:
 --------------
-We recommend that you read about the `USID data model <../../data_format.html>`_
+We recommend that you read about the `USID data model <../usid_model.html>`_
 
 We will be making use of the ``pyUSID`` package at multiple places to illustrate the central point. While it is
 recommended / a bonus, it is not absolutely necessary that the reader understands how the specific ``pyUSID`` functions
@@ -68,10 +68,10 @@ except ImportError:
 #
 # Download from GitHub
 # ~~~~~~~~~~~~~~~~~~~~
-# As mentioned earlier, this image is available on the pyUSID repository and can be accessed directly as well.
+# As mentioned earlier, this image is available on the USID repository and can be accessed directly as well.
 # Here, we will simply download the file using ``wget``:
 image_path = 'temp.tif'
-url = 'https://raw.githubusercontent.com/pycroscopy/pyUSID/master/data/simulated_STEM_Image.tif'
+url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/simulated_STEM_Image.tif'
 if os.path.exists(image_path):
     os.remove(image_path)
 _ = wget.download(url, image_path, bar=None)
@@ -92,11 +92,11 @@ axis.set_title('Image of shape: {}'.format(orig_image.shape))
 # -----------
 # Download from GitHub
 # ~~~~~~~~~~~~~~~~~~~~~
-# Similarly the corresponding h5USID dataset is also available on the pyUSID repository.
+# Similarly the corresponding h5USID dataset is also available on the USID repository.
 # Here, we will simply download the file using ``wget``:
 
 h5_path = 'temp.h5'
-url = 'https://raw.githubusercontent.com/pycroscopy/pyUSID/master/data/simulated_STEM_Image.h5'
+url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/simulated_STEM_Image.h5'
 if os.path.exists(h5_path):
     os.remove(h5_path)
 _ = wget.download(url, h5_path, bar=None)
@@ -105,24 +105,24 @@ _ = wget.download(url, h5_path, bar=None)
 # Open the file
 # ~~~~~~~~~~~~~
 # Lets open the file and look at its contents using
-# `pyUSID.hdf_utils.print_tree() <../beginner/plot_hdf_utils_read.html#print-tree>`_
+# `pyUSID.hdf_utils.print_tree() <../../pyUSID/auto_examples/beginner/plot_hdf_utils_read.html#print-tree>`_
 h5_file = h5py.File(h5_path, mode='r')
 usid.hdf_utils.print_tree(h5_file)
 
 ########################################################################################################################
 # Access the ``Main`` Dataset containing the image of interest
 # ------------------------------------------------------------
-# Clearly, this file contains a single `Measurement` which has a single `Channel <../../data_format.html#channels>`_.
-# We can access the `Main Dataset <../../data_format.html#main-datasets>`_ where all the information is located in
+# Clearly, this file contains a single `Measurement` which has a single `Channel <../usid_model.html#channels>`_.
+# We can access the `Main Dataset <../usid_model.html#main-datasets>`_ where all the information is located in
 # multiple ways. Given that this file contains just a single ``Main Dataset`` we can conveniently use the
-# `pyUSID.hdf_utils.get_all_main() <../beginner/plot_hdf_utils_read.html#get-all-main>`_ function.
+# `pyUSID.hdf_utils.get_all_main() <../../pyUSID/auto_examples/beginner/plot_hdf_utils_read.html#get-all-main>`_ function.
 h5_main = usid.hdf_utils.get_all_main(h5_file)[-1]
 print(h5_main)
 
 ########################################################################################################################
-# Here, ``h5_main`` is a `USIDataset <../beginner/plot_usi_dataset.html>`_, which can be thought of as a supercharged
+# Here, ``h5_main`` is a `USIDataset <../../pyUSID/auto_examples/beginner/plot_usi_dataset.html>`_, which can be thought of as a supercharged
 # HDF5 Dataset that is not only aware of the contents of the plain ``Raw_Data`` dataset but also its links to the
-# `Ancillary Datasets <../../data_format.html#ancillary-datasets>`_ that make it a ``Main Dataset``.
+# `Ancillary Datasets <../usid_model.html#ancillary-datasets>`_ that make it a ``Main Dataset``.
 #
 # Understanding Dimensionality
 # ----------------------------
@@ -141,7 +141,7 @@ print(h5_main)
 # Visualize the Main Dataset
 # --------------------------
 # Now lets visualize the contents within this ``Main Dataset`` using the ``USIDataset's`` built-in
-# `visualize() <../beginner/plot_usi_dataset.html#interactive-visualization>`_ function. Clearly, this dataset is indeed
+# `visualize() <../../pyUSID/auto_examples/beginner/plot_usi_dataset.html#interactive-visualization>`_ function. Clearly, this dataset is indeed
 # a simple 2D image
 
 usid.plot_utils.use_nice_plot_params()
