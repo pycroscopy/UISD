@@ -12,9 +12,18 @@ the **.hdf5** extension so that other software are aware of the general file typ
 ``Main`` data:
 ~~~~~~~~~~~~~~
 
-**Dataset** structured as (positions x time or spectroscopic values)
+**Dataset** structured as (``positions`` x time or ``spectroscopic`` values)
 
 * ``dtype`` : uint8, float32, complex64, compound if necessary, etc.
+* `chunking <https://support.hdfgroup.org/HDF5/doc1.8/Advanced/Chunking/index.html>`__ (**optional**)
+  : Chunking is optional and not necessary in h5USID. Typically, HDF5 / ``h5py`` will automatically do a good job of
+  deciding implicit chunking such that performance is maximized. If chunking is indeed necessary for your application,
+  HDF group recommends that chunks be between 100 kB to 1 MB. We
+  recommend chunking by whole number of positions if possible since data is more
+  likely to be read by position rather than by specific spectral indices.
+* ``compression`` (**optional**): We recommend evaluating the necessity and performance impacts that compression can have on your
+  application. In certain cases, compression can result in very long (10 - 20x) longer read and write times. In such cases,
+  it may be best to compress only if one does not expect to read / modify the dataset frequently (archival).
 * *Required* attributes:
 
   * ``quantity`` - Single string that explains the data. The physical
@@ -29,11 +38,6 @@ the **.hdf5** extension so that other software are aware of the general file typ
   * ``Spectroscopic_Values`` - Reference to the spectroscopic values
     dataset
 
-* `chunking <https://support.hdfgroup.org/HDF5/doc1.8/Advanced/Chunking/index.html>`__
-  : HDF group recommends that chunks be between 100 kB to 1 MB. We
-  recommend chunking by whole number of positions since data is more
-  likely to be read by position rather than by specific spectral indices.
-
 Note that we are only storing references to the ancillary datasets. This
 allows multiple ``main`` datasets to share the same ancillary datasets
 without having to duplicate them.
@@ -43,7 +47,7 @@ without having to duplicate them.
 
 ``Position_Indices`` structured as (``positions`` x ``spatial dimensions``)
 
-* dimensions are arranged in ascending order of rate of change. In other
+* Dimensions are arranged in ascending order of rate of change. In other
   words, the fastest changing dimension is in the first column and the
   slowest is in the last or rightmost column.
 * ``dtype`` : uint32
