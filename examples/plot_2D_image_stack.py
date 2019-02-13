@@ -142,7 +142,7 @@ for main_dset in usid.hdf_utils.get_all_main(h5_file):
 
 usid.plot_utils.use_nice_plot_params()
 for main_dset in usid.hdf_utils.get_all_main(h5_file):
-    main_dset.visualize(num_ticks=3, stdevs=2)
+    main_dset.visualize(num_ticks=3)
 
 ########################################################################################################################
 # Clean up
