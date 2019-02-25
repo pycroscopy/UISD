@@ -107,7 +107,7 @@ print(h5_main)
 #
 # Understanding Dimensionality
 # ----------------------------
-# What is more is that the above print statement shows that this ``Main Dataset`` has two ``Position Dimensions`` -
+# What is more is that the above print statement shows that this ``Main`` Dataset has two ``Position Dimensions`` -
 # ``X`` and ``Y`` each of size ``128`` and at each of these locations, data was recorded as a function of ``119``
 # values of the single ``Spectroscopic Dimension`` - ``Frequency``.
 # Therefore, this dataset is a 3D dataset with two position dimensions and one spectroscopic dimension.
