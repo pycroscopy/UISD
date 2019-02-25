@@ -1,13 +1,14 @@
 """
 ================================================================================
-04. 2D Image Stack
+04. Simultaneously acquired 2D images
 ================================================================================
 
 **Suhas Somnath**
 
 10/12/2018
 
-**This example illustrates how a set of 2D grayscale images would be represented in the Universal Spectroscopy and
+**This example illustrates how a set of *simultaneously acquired* 2D grayscale images would be represented in the
+Universal Spectroscopy and
 Imaging Data (USID) schema and stored in a Hierarchical Data Format (HDF5) file, also referred to as the h5USID file.**
 This example is based on the popular Atomic Force Microscopy scan mode where multiple sensors *simultaneously* acquire
 a value at each position on a 2D grid, thereby resulting in a 2D image per sensor. Specifically, the goal of this
