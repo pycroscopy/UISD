@@ -16,6 +16,8 @@ where appropriate, in addition to links created between the data source and the 
 Despite the fact that it was developed independently, h5USID already satisfies most of the requirements of FAIR principles
 and we intend to make necessary changes to satisfy all the recommendations put forward in the FAIR principles.
 
+Please see our `Arxiv <https://arxiv.org/abs/1903.09515>`_ **paper** for more information on the USID ecosystem.
+
 Using h5USID files
 ------------------
 * `pyUSID <../pyUSID/about.html>`_ provides a convenient python interface to read and write to h5USID files.
