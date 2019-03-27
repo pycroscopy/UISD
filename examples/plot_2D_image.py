@@ -35,7 +35,7 @@ import os
 from warnings import warn
 import h5py
 import numpy as np
-from skimage.io import imread
+from PIL import Image
 import matplotlib.pyplot as plt
 
 
@@ -80,7 +80,11 @@ _ = wget.download(url, image_path, bar=None)
 # More about this image
 # ~~~~~~~~~~~~~~~~~~~~~
 # Lets visualize this image and learn about its original shape:
-orig_image = imread(image_path)
+
+img_obj = Image.open(image_path)
+# Convert to grayscale:
+img_obj = img_obj.convert(mode="L")
+orig_image = np.asarray(img_obj)
 
 fig, axis = plt.subplots()
 usid.plot_utils.plot_map(axis, orig_image, num_ticks=5)
