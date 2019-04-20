@@ -11,13 +11,14 @@ At the moment, we only have tools to read and write USID HDF5 files in python vi
 Given the open-source code of pyUSID and comprehensive documentation available, we believe that it should not be very challenging to work on USID HDF5 in other programming languages.
 If you are interested in making an API available for other languages, we would be happy to help in any way we can. Please `get in touch with us <./contact.html>`_.
 
-What is USID not for?
-~~~~~~~~~~~~~~~~~~~~~
-USID is best suited for large, complex, and multidimensional scientific data.
-It is also well suited when research is performed on multiple (especially commercial) instruments that generate data of different dimesionalities, scientific modalities, that will need to be correlated or compared routinely.
-
-USID can seem like an overkill if one is working solely on simple and small data like spectra or images. In such cases, software such as ImageJ might be a better fit.
-USID is not the best fit when a database solution with search capabilities. However, it will make it easier when combined with a Database / SDMS
+What is USID not suited for?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* USID is best suited for large, complex, and multidimensional scientific data.
+  It is also well suited when research is performed on multiple (especially commercial) instruments that generate data of
+  different dimesionalities, scientific modalities, that will need to be correlated or compared routinely.
+* USID can seem like an overkill if one is working solely on simple and small data like images. In such cases, dedicated image processing software such as ImageJ might be a better fit.
+* USID is not the best fit when a database solution with search capabilities is desired (e.g. - simple tabular data or a collection of several short spectra).
+  Yes, the HDF5 file can be treated as a large database but this is a suboptimal method for using HDF5 files.
 
 Is it mandatory to store the results of data processing within the same file?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
