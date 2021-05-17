@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Advanced topics &mdash; USID 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Frequently asked questions" href="faq.html" />
+    <link rel="prev" title="Metadata" href="metadata.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> USID
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">USID</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">Universal Spectroscopy and Imaging Data  (USID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nomenclature.html">Nomenclature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usid_model.html">Data Schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_format.html">File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="h5_usid.html">USID in HDF5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">Metadata</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#region-references">Region references</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#processing-on-multiple-main-datasets">Processing on multiple <code class="docutils literal notranslate"><span class="pre">Main</span></code> datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sparse-sampling-compressed-sensing">Sparse Sampling / Compressed Sensing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#provenance-over-multiple-hdf5-files">Provenance over multiple HDF5 files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently asked questions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/examples/index.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">USID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Advanced topics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/advanced_topics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="advanced-topics">
+<h1>Advanced topics<a class="headerlink" href="#advanced-topics" title="Permalink to this headline">¶</a></h1>
+<p><strong>Suhas Somnath</strong></p>
+<p>8/8/2017</p>
+<div class="section" id="region-references">
+<h2>Region references<a class="headerlink" href="#region-references" title="Permalink to this headline">¶</a></h2>
+<p>These are references to sections of a <code class="docutils literal notranslate"><span class="pre">main</span></code> or <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> dataset that make it easy to access data specific to a
+specific portion of the measurement, or each column or row in the ancillary datasets just by their alias (intuitive
+strings for names).</p>
+<p>We have observed that the average <strong>USID</strong> user does not tend to use region references as much as we thought they
+might. Therefore, we do not require or enforce that region references be used</p>
+</div>
+<div class="section" id="processing-on-multiple-main-datasets">
+<h2>Processing on multiple <code class="docutils literal notranslate"><span class="pre">Main</span></code> datasets<a class="headerlink" href="#processing-on-multiple-main-datasets" title="Permalink to this headline">¶</a></h2>
+<p>One popular scientific workflow we anticipate involves the usage of multiple <code class="docutils literal notranslate"><span class="pre">source</span></code> datasets to create results.
+By definition, this breaks the current nomenclature of HDF5 groups that will contain results. This will be addressed by
+restructuring the code in such a way that the results group could be named as: <code class="docutils literal notranslate"><span class="pre">Multi_Dataset-Tool_Name_000</span></code>. To improve
+the robustness of the solution, we have already begun storing the necessary information as attributes of the HDF5
+results groups. Here are the attributes of the group that we expect to capture the references to all the datasets along
+with the name of the tool while relaxing the restrictions on the aforementioned nomenclature:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tool</span></code> : &lt;string&gt; - Name of the tool / process applied to the datasets</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_sources</span></code>: &lt;unsigned integer&gt; - Number of source datasets that take part in the process</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source_000</span></code> : &lt;HDF5 object reference&gt; - reference to the first source dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source_001</span></code> : &lt;HDF5 object reference&gt; - reference to the second source dataset …</p></li>
+</ul>
+<p>We would have to break the list of references to the source datasets into individual attributes since h5py / HDF5
+currently does not allow the value of an attribute to be a list of object references.</p>
+</div>
+<div class="section" id="sparse-sampling-compressed-sensing">
+<h2>Sparse Sampling / Compressed Sensing<a class="headerlink" href="#sparse-sampling-compressed-sensing" title="Permalink to this headline">¶</a></h2>
+<p>In many cases, especially electron and ion based microscopy, the very act of probing the sample damages the sample.
+In order to minimize damage to the sample, researchers only sample data from a few random positions in the 2D grid of
+positions and use advanced algorithms to reconstruct the missing data. This scientific problem presents a data storage
+challenge. The naive approach would be to store a giant matrix of zeros with only a available positions filled in.
+This is highly inefficient since the space occupied by the data would be equal to that of the complete (non-sparse)
+dataset.</p>
+<p>For such sparse sampling problems, we propose that the indices for each position be identical and still range from <code class="docutils literal notranslate"><span class="pre">0</span></code>
+to <code class="docutils literal notranslate"><span class="pre">N-1</span></code> for a dataset with <code class="docutils literal notranslate"><span class="pre">N</span></code> randomly sampled positions. Thus, for an example dataset with two position dimensions,
+the indices would be arranged as:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>X</p></th>
+<th class="head"><p>Y</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>.</p></td>
+<td><p>.</p></td>
+</tr>
+<tr class="row-even"><td><p>N-2</p></td>
+<td><p>N-2</p></td>
+</tr>
+<tr class="row-odd"><td><p>N-1</p></td>
+<td><p>N-1</p></td>
+</tr>
+</tbody>
+</table>
+<p>However, the position values would contain the actual values:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>X</p></th>
+<th class="head"><p>Y</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>9.5</p></td>
+<td><p>1.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>3.6</p></td>
+<td><p>7.4</p></td>
+</tr>
+<tr class="row-even"><td><p>5.4</p></td>
+<td><p>8.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>.</p></td>
+<td><p>.</p></td>
+</tr>
+<tr class="row-even"><td><p>1.2</p></td>
+<td><p>3.9</p></td>
+</tr>
+<tr class="row-odd"><td><p>4.8</p></td>
+<td><p>6.1</p></td>
+</tr>
+</tbody>
+</table>
+<p>The spectroscopic ancillary datasets would be constructed and defined in the traditional methods since the sampling in
+the spectroscopic dimension is identical for all measurements.</p>
+<p>The vast majority of the existing features including signal filtering, statistical machine learning algorithms, etc. in
+child packages like pycroscopy could still be applied to such datasets.</p>
+<p>By nature of its definition, such a dataset will certainly pose problems when attempting to reshape to its N-dimensional
+form among other things. Pycroscopy currently does not have any scientific algorithms or real datasets specifically
+written for such data but this will be addressed in the near future. This is section is presented to show that we
+have indeed thought about such advanced problems as well when designing the universal data structure.</p>
+</div>
+<div class="section" id="provenance-over-multiple-hdf5-files">
+<h2>Provenance over multiple HDF5 files<a class="headerlink" href="#provenance-over-multiple-hdf5-files" title="Permalink to this headline">¶</a></h2>
+<p>We are exploring strategies to accomdoate situations where data products are spread over multiple (smaller) HDF5 files.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="faq.html" class="btn btn-neutral float-right" title="Frequently asked questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="metadata.html" class="btn btn-neutral float-left" title="Metadata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Stephen Jesse, Suhas Somnath and Chris Smith.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

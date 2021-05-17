@@ -1,0 +1,291 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Hyperspectral Images\n",
+    "(Simultaneously acquired 2D images)\n",
+    "\n",
+    "**Suhas Somnath**\n",
+    "\n",
+    "10/12/2018\n",
+    "\n",
+    "**This example illustrates how a set of *simultaneously acquired* 2D grayscale images would be represented in the\n",
+    "Universal Spectroscopy and\n",
+    "Imaging Data (USID) schema and stored in a Hierarchical Data Format (HDF5) file, also referred to as the h5USID file.**\n",
+    "This example is based on the popular Atomic Force Microscopy scan mode where multiple sensors *simultaneously* acquire\n",
+    "a value at each position on a 2D grid, thereby resulting in a 2D image per sensor. Specifically, the goal of this\n",
+    "example is to demonstrate the sharing of ``Ancillary`` datasets among multiple ``Main`` datasets.\n",
+    "\n",
+    "This document is intended as a supplement to the explanation about the [USID model](../../usid_model.html)\n",
+    "\n",
+    "Please consider downloading this document as a Jupyter notebook using the button at the bottom of this document.\n",
+    "\n",
+    "Prerequisites:\n",
+    "--------------\n",
+    "We recommend that you read about the [USID model](../../usid_model.html)\n",
+    "\n",
+    "We will be making use of the ``pyUSID`` package at multiple places to illustrate the central point. While it is\n",
+    "recommended / a bonus, it is not absolutely necessary that the reader understands how the specific ``pyUSID`` functions\n",
+    "work or why they were used in order to understand the data representation itself.\n",
+    "Examples about these functions can be found in other documentation on pyUSID and the reader is encouraged to read the\n",
+    "supplementary documents.\n",
+    "\n",
+    "### Import all necessary packages\n",
+    "The main packages necessary for this example are ``h5py``, ``matplotlib``, and ``sidpy``, in addition to ``pyUSID``:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "import subprocess\n",
+    "import sys\n",
+    "import os\n",
+    "import matplotlib.pyplot as plt\n",
+    "from warnings import warn\n",
+    "import h5py\n",
+    "\n",
+    "%matplotlib inline\n",
+    "\n",
+    "def install(package):\n",
+    "    subprocess.call([sys.executable, \"-m\", \"pip\", \"install\", package])\n",
+    "\n",
+    "\n",
+    "try:\n",
+    "    # This package is not part of anaconda and may need to be installed.\n",
+    "    import wget\n",
+    "except ImportError:\n",
+    "    warn('wget not found.  Will install with pip.')\n",
+    "    import pip\n",
+    "    install('wget')\n",
+    "    import wget\n",
+    "\n",
+    "# Finally import pyUSID.\n",
+    "try:\n",
+    "    import pyUSID as usid\n",
+    "    import sidpy\n",
+    "except ImportError:\n",
+    "    warn('pyUSID not found.  Will install with pip.')\n",
+    "    import pip\n",
+    "    install('pyUSID')\n",
+    "    import sidpy\n",
+    "    import pyUSID as usid"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Download the dataset\n",
+    "---------------------\n",
+    "As mentioned earlier, this image is available on the USID repository and can be accessed directly as well.\n",
+    "Here, we will simply download the file using ``wget``:\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "h5_path = 'temp.h5'\n",
+    "url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/SingFreqPFM_0003.h5'\n",
+    "if os.path.exists(h5_path):\n",
+    "    os.remove(h5_path)\n",
+    "_ = wget.download(url, h5_path, bar=None)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Open the file\n",
+    "-------------\n",
+    "Lets open the file and look at its contents using\n",
+    "[sidpy.hdf_utils.print_tree()](https://pycroscopy.github.io/sidpy/notebooks/03_hdf5/hdf_utils_read.html#print_tree())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "h5_file = h5py.File(h5_path, mode='r')\n",
+    "usid.hdf_utils.print_tree(h5_file)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Notice that this file has multiple [Channel](../../usid_model.html#channels), each with a dataset named\n",
+    "``Raw_Data``. Are they all [Main Dataset](../../usid_model.html#main-datasets) datasets?\n",
+    "There are multiple ways to find out this. One approach is simply to ask pyUSID to list out all available ``Main``\n",
+    "datasets.\n",
+    "\n",
+    "Visualize the contents in each of these channels\n",
+    "------------------------------------------------\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "for main_dset in usid.hdf_utils.get_all_main(h5_file):\n",
+    "    print(main_dset)\n",
+    "    print('---------------------------------------------------------------\\n')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "From the print statements above, it is clear that each of these ``Raw_Data`` datasets were indeed ``Main`` datasets.\n",
+    "How can these datasets be ``Main`` if they are not co-located with the corresponding sets of ``Ancillary`` datasets\n",
+    "within each ``Channel`` group?\n",
+    "\n",
+    "Sharing Ancillary Datasets\n",
+    "--------------------------\n",
+    "Since each of the ``Main`` datasets have the same position and spectroscopic dimensions, they share the same\n",
+    "set of ancillary datasets that are under ``Measurement_000`` group. This is common for Scanning Probe Microscopy\n",
+    "scans where information from multiple sensors are recorded **simultaneously** during the scan.\n",
+    "\n",
+    "Recall from the USID documentation that:\n",
+    "\n",
+    "1. Multiple ``Main`` datasets can share the same ``Ancillary`` datasets\n",
+    "2. The ``Main`` datasets only need to have ``attributes`` named ``Position_Indices``, ``Position_Values``,\n",
+    "   ``Spectroscopic_Indices``, and ``Spectroscopic_Values``with the value set to the reference of the corresponding\n",
+    "   ``Ancillary`` datasets\n",
+    "\n",
+    "We can investigate if this is indeed the case here. Lets get the references to ``Ancillary`` datasets linked to each\n",
+    "of the ``Main`` datasets:\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "for main_dset in usid.hdf_utils.get_all_main(h5_file):\n",
+    "    print('Main Dataset: {}'.format(main_dset.name))\n",
+    "    print('Position Indices: {}'.format(main_dset.h5_pos_inds.name))\n",
+    "    print('Position Values: {}'.format(main_dset.h5_pos_vals.name))\n",
+    "    print('Spectroscopic Indices: {}'.format(main_dset.h5_spec_inds.name))\n",
+    "    print('Spectroscopic Values: {}'.format(main_dset.h5_spec_vals.name))\n",
+    "    print('---------------------------------------------------------------\\n')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "From above, we see that all the ``Main`` datasets we indeed referencing the same set of ``Ancillary`` Datasets.\n",
+    "Note that it would **not** have been wrong to store (duplicate copies of) the ``Ancillary`` datasets within each\n",
+    "``Channel`` group. The data was stored in this manner since it is more efficient and because it was known *apriori*\n",
+    "that all ``Main`` datasets are dimensionally equal. Also note that this sharing of ``Ancillary`` datasets is OK even\n",
+    "though the physical quantity and units within each ``Main`` dataset are different since these two pieces of\n",
+    "information are stored in the attributes of the ``Main`` datasets (which are unique and independent) and not in the\n",
+    "``Ancillary`` datasets.\n",
+    "\n",
+    "The discussion regarding the contents of the ``Ancillary`` datasets are identical to that for the [2D grayscale\n",
+    "image](./image.html) and will not be discussed here for brevity.\n",
+    "\n",
+    "Visualizing the contents within each channel\n",
+    "--------------------------------------------\n",
+    "Now lets visualize the contents within this ``Main Dataset`` using the ``USIDataset's`` built-in\n",
+    "[visualize()](../user_guide/usi_dataset.html#Interactive-Visualization) function."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "usid.plot_utils.use_nice_plot_params()\n",
+    "for main_dset in usid.hdf_utils.get_all_main(h5_file):\n",
+    "    main_dset.visualize(num_ticks=3)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Clean up\n",
+    "--------\n",
+    "Finally lets close and delete the example HDF5 file\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "h5_file.close()\n",
+    "os.remove(h5_path)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

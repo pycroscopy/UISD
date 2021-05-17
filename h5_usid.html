@@ -1,0 +1,577 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>USID in HDF5 &mdash; USID 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Metadata" href="metadata.html" />
+    <link rel="prev" title="File Format" href="file_format.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> USID
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">USID</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">Universal Spectroscopy and Imaging Data  (USID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nomenclature.html">Nomenclature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usid_model.html">Data Schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_format.html">File Format</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">USID in HDF5</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#main-data"><code class="docutils literal notranslate"><span class="pre">Main</span></code> data:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ancillary-data"><code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> data:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#groups">Groups</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#measurement-data">Measurement data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tool-analysis-processing">Tool (analysis / processing)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_topics.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently asked questions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/examples/index.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">USID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>USID in HDF5</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/h5_usid.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="usid-in-hdf5">
+<h1>USID in HDF5<a class="headerlink" href="#usid-in-hdf5" title="Permalink to this headline">¶</a></h1>
+<p><strong>Suhas Somnath</strong></p>
+<p>8/8/2017</p>
+<p>Here we discuss guidelines and specifications for implementing the <strong>USID</strong> model into HDF5 files.
+While we could impose that the file extension be changed from <strong>.hdf5</strong> to <strong>.h5USID</strong>, we choose to retain
+the <strong>.hdf5</strong> extension so that other software are aware of the general file type and can recognize / read them easily.</p>
+<div class="section" id="main-data">
+<h2><code class="docutils literal notranslate"><span class="pre">Main</span></code> data:<a class="headerlink" href="#main-data" title="Permalink to this headline">¶</a></h2>
+<p><strong>Dataset</strong> structured as (<code class="docutils literal notranslate"><span class="pre">positions</span></code> x time or <code class="docutils literal notranslate"><span class="pre">spectroscopic</span></code> values)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype</span></code> : uint8, float32, complex64, compound if necessary, etc.</p></li>
+<li><p><a class="reference external" href="https://support.hdfgroup.org/HDF5/doc1.8/Advanced/Chunking/index.html">chunking</a> (<strong>optional</strong>)
+: Chunking is optional and not necessary in h5USID. Typically, HDF5 / <code class="docutils literal notranslate"><span class="pre">h5py</span></code> will automatically do a good job of
+deciding implicit chunking such that performance is maximized. If chunking is indeed necessary for your application,
+HDF group recommends that chunks be between 100 kB to 1 MB. We
+recommend chunking by whole number of positions if possible since data is more
+likely to be read by position rather than by specific spectral indices.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compression</span></code> (<strong>optional</strong>): We recommend evaluating the necessity and performance impacts that compression can have on your
+application. In certain cases, compression can result in very long (10 - 20x) longer read and write times. In such cases,
+it may be best to compress only if one does not expect to read / modify the dataset frequently (archival).</p></li>
+<li><p><em>Required</em> attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">quantity</span></code> - Single string that explains the data. The physical
+quantity contained in each cell of the dataset – eg –
+‘Current’ or ‘Deflection’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> – Single string for units. The units for the physical
+quantity like ‘nA’, ‘V’, ‘pF’, etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Position_Indices</span></code> - Reference to the position indices dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Position_Values</span></code> - Reference to the position values dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Indices</span></code> - Reference to the spectroscopic indices
+dataset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Values</span></code> - Reference to the spectroscopic values
+dataset</p></li>
+</ul>
+</li>
+</ul>
+<p>Note that we are only storing references to the ancillary datasets. This
+allows multiple <code class="docutils literal notranslate"><span class="pre">main</span></code> datasets to share the same ancillary datasets
+without having to duplicate them.</p>
+</div>
+<div class="section" id="ancillary-data">
+<h2><code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> data:<a class="headerlink" href="#ancillary-data" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Position_Indices</span></code> structured as (<code class="docutils literal notranslate"><span class="pre">positions</span></code> x <code class="docutils literal notranslate"><span class="pre">spatial</span> <span class="pre">dimensions</span></code>)</p>
+<ul class="simple">
+<li><p>Dimensions are arranged in ascending order of rate of change. In other
+words, the fastest changing dimension is in the first column and the
+slowest is in the last or rightmost column.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype</span></code> : uint32</p></li>
+<li><p>Required attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code> - list of strings for the column names like [‘X’, ‘Y’]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> – list of strings for units like [‘um’, ‘nm’]</p></li>
+</ul>
+</li>
+<li><p>Optional attributes:
+* Region references based on column names</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Position_Values</span></code> structured as (<code class="docutils literal notranslate"><span class="pre">positions</span></code> x <code class="docutils literal notranslate"><span class="pre">spatial</span> <span class="pre">dimensions</span></code>)</p>
+<ul class="simple">
+<li><p>dimensions are arranged in ascending order of rate of change. In other
+words, the fastest changing dimension is in the first column and the
+slowest is in the last or rightmost column.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype</span></code> : float32</p></li>
+<li><p>Required attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code> - list of strings for the column names like [‘X’, ‘Y’]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> – list of strings for units like [‘um’, ‘nm’]</p></li>
+</ul>
+</li>
+<li><p>Optional attributes:
+* Region references based on column names</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Indices</span></code> structured as (<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code> x
+<code class="docutils literal notranslate"><span class="pre">time</span></code>)</p>
+<ul class="simple">
+<li><p>dimensions are arranged in ascending order of rate of change.
+In other words, the fastest changing dimension is in the first row and
+the slowest is in the last or lowermost row.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype</span></code> : uint32</p></li>
+<li><p>Required attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code> - list of strings for the column names like [‘Bias’, ‘Cycle’]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> – list of strings for units like [‘V’, ‘’].
+Empty string for dimensionless quantities</p></li>
+</ul>
+</li>
+<li><p>Optional attributes:
+* Region references based on row names</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Values</span></code> structured as (<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code> x
+<code class="docutils literal notranslate"><span class="pre">time</span></code>)</p>
+<ul class="simple">
+<li><p>dimensions are arranged in ascending order of rate of change.
+In other words, the fastest changing dimension is in the first row and
+the slowest is in the last or lowermost row.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype</span></code> : float32</p></li>
+<li><p>Required attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">labels</span></code> - list of strings for the column names like [‘Bias’, ‘Cycle’]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> – list of strings for units like [‘V’, ‘’].
+Empty string for dimensionless quantities</p></li>
+</ul>
+</li>
+<li><p>Optional attributes:</p>
+<ul>
+<li><p>Region references based on row names</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<p>All groups and (at least <code class="docutils literal notranslate"><span class="pre">Main</span></code>) datasets must be created with the following <strong>mandatory</strong> attributes for better traceability:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">time_stamp</span></code> : ‘2017_08_15-22_15_45’ (date and time of creation
+of the group or dataset formatted as ‘YYYY_MM_DD-HH_mm_ss’ as
+a string)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">machine_id</span></code> : ‘mac1234.ornl.gov’ (a fully qualified domain name as
+a string)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyUSID_version</span></code> : ‘0.0.1’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">platform</span></code> : ‘Windows10….’ or something like ‘Darwin-17.4.0-x86_64-i386-64bit’ (for Mac OS) -
+a long string providing detailed information about the operating system</p></li>
+</ul>
+</div>
+<div class="section" id="groups">
+<h2>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h2>
+<p>HDF5 Groups in <strong>h5USID</strong> are used to organize categories of information (raw measurements from instruments, results from data analysis, etc.) in an intuitive manner.</p>
+<div class="section" id="measurement-data">
+<h3>Measurement data<a class="headerlink" href="#measurement-data" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>As mentioned earlier, instrument users may change experimental
+parameters during measurements. Even if these changes are minor, they
+can lead to misinterpretation of data if the changes are not handled
+robustly. To solve this problem, we recommend storing data under <strong>indexed</strong>
+groups named as <code class="docutils literal notranslate"><span class="pre">Measurement_00x</span></code>. Each time the parameters
+are changed, the dataset is truncated to the point until which data
+was collected and a new group is created to store the upcoming
+new measurement data.</p></li>
+<li><p>Each <strong>channel</strong> of information acquired during the measurement gets
+its own group.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Main</span></code> datasets would reside within these channel groups.</p></li>
+<li><p>Similar to the measurement groups, the channel groups are
+named as <code class="docutils literal notranslate"><span class="pre">Channel_00x</span></code>. The index for the group is incremented
+according to the index of the information channel.</p></li>
+<li><p>Depending on the circumstances, the ancillary datasets can be shared
+among channels.</p>
+<ul>
+<li><p>Instead of the main dataset in <code class="docutils literal notranslate"><span class="pre">Channel_001</span></code> having references to
+the ancillary datasets in <code class="docutils literal notranslate"><span class="pre">Channel_000</span></code>, we recommend placing the
+ancillary datasets outside the Channel groups in a area common
+to both channel groups. Typically, this is the
+<code class="docutils literal notranslate"><span class="pre">Measurement_00x</span></code> group.</p></li>
+</ul>
+</li>
+<li><p>This is what the tree structure in the file looks like when
+experimental parameters were changed twice and there are two channels
+of information being acquired during the measurements.</p></li>
+<li><p>Datasets common to all measurement groups (perhaps some calibration
+data that is acquired only once before all measurements)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Measurement_000</span></code> (group)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Channel_000</span></code> (group)</p>
+<ul>
+<li><p>Datasets here</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Channel_001</span></code> (group)</p>
+<ul>
+<li><p>Datasets here</p></li>
+</ul>
+</li>
+<li><p>Datasets common to <code class="docutils literal notranslate"><span class="pre">Channel_000</span></code> and <code class="docutils literal notranslate"><span class="pre">Channel_001</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Measurement_001</span></code> (group)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Channel_000</span></code> (group)</p>
+<ul>
+<li><p>Datasets here</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Channel_001</span></code> (group)</p>
+<ul>
+<li><p>Datasets here</p></li>
+</ul>
+</li>
+<li><p>Datasets common to <code class="docutils literal notranslate"><span class="pre">Channel_000</span></code> and <code class="docutils literal notranslate"><span class="pre">Channel_001</span></code></p></li>
+</ul>
+</li>
+<li><p>…</p></li>
+</ul>
+</div>
+<div class="section" id="tool-analysis-processing">
+<h3>Tool (analysis / processing)<a class="headerlink" href="#tool-analysis-processing" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Each time an analysis or processing routine, referred generally as
+<code class="docutils literal notranslate"><span class="pre">tool</span></code>, is performed on a dataset of interest, the results are
+stored in new HDF5 datasets within a new HSF5 group.</p></li>
+<li><p>A completely new dataset(s) and group are created even if a minor
+operation is being performed on the dataset. In other words, we <strong>do NOT modify existing datasets</strong>.</p></li>
+<li><p>Almost always, the tool is applied to one (or more) <code class="docutils literal notranslate"><span class="pre">main</span></code> datasets (referred to
+as the <code class="docutils literal notranslate"><span class="pre">source</span></code> dataset) and at least one of the results is
+typically also a <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset. These new <code class="docutils literal notranslate"><span class="pre">main</span></code> datasets will
+either need to be linked to the ancillary matrices of the <code class="docutils literal notranslate"><span class="pre">source</span></code>
+or to new ancillary datasets that will need to be created.</p></li>
+<li><p>The resultant dataset(s) are always stored in a group whose name
+is derived from the names of the tool and the dataset. This makes the
+data <strong>traceable</strong>, meaning that the names of the datasets and
+groups are sufficient to understand what processing or analysis
+steps were applied to the data to bring it to a particular point.</p></li>
+<li><p>The group is named as <code class="docutils literal notranslate"><span class="pre">Source_Dataset-Tool_Name_00x</span></code>, where a
+<code class="docutils literal notranslate"><span class="pre">tool</span></code> named <code class="docutils literal notranslate"><span class="pre">Tool_Name</span></code> is applied to a <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset named
+<code class="docutils literal notranslate"><span class="pre">Source_Dataset</span></code>.</p>
+<ul class="simple">
+<li><p>Since there is a possibility that the same tool could be applied
+to the very same dataset multiple times, we store the results of
+each run of the tool in a separate group. These groups are
+differentiated by the index that is appended to the name of
+the group.</p></li>
+<li><p>Note that a <code class="docutils literal notranslate"><span class="pre">-</span></code> separates the dataset name from the tool name
+and anything after the last <code class="docutils literal notranslate"><span class="pre">_</span></code> will be assumed to be the index
+of the group</p></li>
+<li><p>Please refer to the advanced topics section for tools that have <strong>more than one</strong>
+<code class="docutils literal notranslate"><span class="pre">source</span></code> datasets</p></li>
+</ul>
+</li>
+<li><p>In general, the results from tools applied to datasets should be
+stored as:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Source_Dataset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Source_Dataset-Tool_Name_000</span></code> (group containing results from
+first run of the <code class="docutils literal notranslate"><span class="pre">tool</span></code> on <code class="docutils literal notranslate"><span class="pre">Source_Dataset</span></code>)</p>
+<ul>
+<li><p>Attributes:</p>
+<ul>
+<li><p>all mandatory attributes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">algorithm</span></code></p></li>
+<li><p>Other tool-relevant attributes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source_000</span></code> - reference to <code class="docutils literal notranslate"><span class="pre">Source_Dataset</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dataset_Result0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dataset_Result1</span></code> …</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Source_Dataset-Tool_Name_001</span></code> (group containing results from
+second run of the <code class="docutils literal notranslate"><span class="pre">tool</span></code> on <code class="docutils literal notranslate"><span class="pre">Source_Dataset</span></code>)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>This methodology is illustrated with an example of applying
+<code class="docutils literal notranslate"><span class="pre">K-Means</span> <span class="pre">Clustering</span></code> on the <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code> acquired from a measurement:</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code> (<code class="docutils literal notranslate"><span class="pre">main</span></code> dataset)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Raw_Data-Cluster_000</span></code> (group)</p></li>
+<li><p>Attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>all mandatory attributes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">algorithm</span></code> : ‘K-Means’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source_000</span></code> : reference to <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Label_Indices</span></code> (ancillary spectroscopic dataset with 1 dimension of size 1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Label_Values</span></code> (ancillary spectroscopic dataset with 1 dimension of size 1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Labels</span></code> (Main dataset)</p>
+<ul class="simple">
+<li><p>Attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">quantity</span></code> : ‘Cluster labels’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> : ‘a. u.’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Position_Indices</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Position_Indices</span></code> from
+attribute of <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Position_Values</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Position_Values</span></code> from
+attribute of <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Indices</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Label_Indices</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Values</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Label_Values</span></code></p></li>
+<li><p>all mandatory attributes</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Cluster_Indices</span></code> (ancillary positions dataset with 1 dimension of size equal to number of clusters)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Cluster_Values</span></code> (ancillary positions dataset with 1 dimension of size equal to number of clusters)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Mean_Response</span></code> (main dataset) &lt;- This dataset stores the endmembers
+or mean response for each cluster</p>
+<ul class="simple">
+<li><p>Attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">quantity</span></code> : copy from the <code class="docutils literal notranslate"><span class="pre">quantity</span></code> attribute in
+<code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> : copy from the <code class="docutils literal notranslate"><span class="pre">units</span></code> attribute in <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Position_Indices</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Cluster_Indices</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Position_Values</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Cluster_Values</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Indices</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Spectroscopic_Indices</span></code>
+from attribute of <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Spectroscopic_Values</span></code> : Reference to <code class="docutils literal notranslate"><span class="pre">Spectroscopic_Values</span></code>
+from attribute of <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code></p></li>
+<li><p>all mandatory attributes</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Note that the spectroscopic datasets that the <code class="docutils literal notranslate"><span class="pre">Labels</span></code> dataset link
+to are not called <code class="docutils literal notranslate"><span class="pre">Spectroscopic_Indices</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Spectroscopic_Values</span></code> themselves. They only need to follow the
+specifications outlined above. The same is true for the position
+datasets for <code class="docutils literal notranslate"><span class="pre">Mean_Response</span></code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="metadata.html" class="btn btn-neutral float-right" title="Metadata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="file_format.html" class="btn btn-neutral float-left" title="File Format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Stephen Jesse, Suhas Somnath and Chris Smith.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

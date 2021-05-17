@@ -1,0 +1,1065 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>2D Image &mdash; USID 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3D Spectral Image" href="spectral_image.html" />
+    <link rel="prev" title="1D Spectrum or Curve" href="spectrum.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> USID
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">USID</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">Universal Spectroscopy and Imaging Data  (USID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../nomenclature.html">Nomenclature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usid_model.html">Data Schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../file_format.html">File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../h5_usid.html">USID in HDF5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../metadata.html">Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced_topics.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">Frequently asked questions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spectrum.html">1D Spectrum or Curve</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2D Image</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Prerequisites:">Prerequisites:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Import-all-necessary-packages">Import all necessary packages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Source-image">Source image</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Download-from-GitHub">Download from GitHub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#More-about-this-image">More about this image</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#h5USID-File">h5USID File</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Download from GitHub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Open-the-file">Open the file</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Access-the-Main-Dataset-containing-the-image-of-interest">Access the <code class="docutils literal notranslate"><span class="pre">Main</span></code> Dataset containing the image of interest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Understanding-Dimensionality">Understanding Dimensionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Visualize-the-Main-Dataset">Visualize the <code class="docutils literal notranslate"><span class="pre">Main</span></code> Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Ancillary-Datasets">Ancillary Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Ancillary-Position-Datasets">Ancillary Position Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Visualize-the-contents-of-the-Position-Ancillary-Datasets">Visualize the contents of the Position Ancillary Datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Making-sense-of-the-visualization">Making sense of the visualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Attributes-associated-with-the-Position-Indices-Dataset">Attributes associated with the Position Indices Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Ancillary-Spectroscopic-Datasets">Ancillary Spectroscopic Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Attributes-within-the-Spectroscopic-Indices-Dataset">Attributes within the Spectroscopic Indices Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Attempting-to-visualize-the-first-few-rows-of-the-image-manually">Attempting to visualize the first few rows of the image manually</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Clean-up">Clean up</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spectral_image.html">3D Spectral Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_stack.html">Hyperspectral Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="video.html">Video</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">USID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Examples</a> &raquo;</li>
+        
+      <li>2D Image</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/notebooks/examples/image.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="2D-Image">
+<h1>2D Image<a class="headerlink" href="#2D-Image" title="Permalink to this headline">¶</a></h1>
+<p><strong>Suhas Somnath</strong></p>
+<p>10/12/2018</p>
+<p><strong>This example illustrates how a 2D grayscale image would be represented in the Universal Spectroscopy and Imaging Data (USID) schema and stored in a Hierarchical Data Format (HDF5) file, also referred to as the h5USID file.</strong></p>
+<p>This document is intended as a supplement to the explanation about the <a class="reference external" href="../../usid_model.html">USID model</a></p>
+<p>Please consider downloading this document as a Jupyter notebook using the button at the bottom of this document.</p>
+<div class="section" id="Prerequisites:">
+<h2>Prerequisites:<a class="headerlink" href="#Prerequisites:" title="Permalink to this headline">¶</a></h2>
+<p>We recommend that you read about the <a class="reference external" href="../../usid_model.htm">USID model</a></p>
+<p>We will be making use of the <code class="docutils literal notranslate"><span class="pre">pyUSID</span></code> package at multiple places to illustrate the central point. While it is recommended / a bonus, it is not absolutely necessary that the reader understands how the specific <code class="docutils literal notranslate"><span class="pre">pyUSID</span></code> functions work or why they were used in order to understand the data representation itself. Examples about these functions can be found in other documentation on pyUSID and the reader is encouraged to read the supplementary documents.</p>
+<div class="section" id="Import-all-necessary-packages">
+<h3>Import all necessary packages<a class="headerlink" href="#Import-all-necessary-packages" title="Permalink to this headline">¶</a></h3>
+<p>The main packages necessary for this example are <code class="docutils literal notranslate"><span class="pre">h5py</span></code>, <code class="docutils literal notranslate"><span class="pre">PIL</span></code> (pillow), <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, and <code class="docutils literal notranslate"><span class="pre">sidpy</span></code>, in addition to <code class="docutils literal notranslate"><span class="pre">pyUSID</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+
+<span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="n">package</span><span class="p">])</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># This package is not part of anaconda and may need to be installed.</span>
+    <span class="kn">import</span> <span class="nn">wget</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;wget not found.  Will install with pip.&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">pip</span>
+    <span class="n">install</span><span class="p">(</span><span class="s1">&#39;wget&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">wget</span>
+
+<span class="c1"># Finally import pyUSID.</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pyUSID</span> <span class="k">as</span> <span class="nn">usid</span>
+    <span class="kn">import</span> <span class="nn">sidpy</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;pyUSID not found.  Will install with pip.&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">pip</span>
+    <span class="n">install</span><span class="p">(</span><span class="s1">&#39;pyUSID&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">sidpy</span>
+    <span class="kn">import</span> <span class="nn">pyUSID</span> <span class="k">as</span> <span class="nn">usid</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Source-image">
+<h2>Source image<a class="headerlink" href="#Source-image" title="Permalink to this headline">¶</a></h2>
+<p>For this example, we will be working with a simple grayscale image.</p>
+<div class="section" id="Download-from-GitHub">
+<h3>Download from GitHub<a class="headerlink" href="#Download-from-GitHub" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned earlier, this image is available on the USID repository and can be accessed directly as well. Here, we will simply download the file using <code class="docutils literal notranslate"><span class="pre">wget</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">image_path</span> <span class="o">=</span> <span class="s1">&#39;temp.tif&#39;</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/pycroscopy/USID/master/data/simulated_STEM_Image.tif&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">image_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">image_path</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="More-about-this-image">
+<h3>More about this image<a class="headerlink" href="#More-about-this-image" title="Permalink to this headline">¶</a></h3>
+<p>Lets visualize this image and learn about its original shape:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">img_obj</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+<span class="c1"># Convert to grayscale:</span>
+<span class="n">img_obj</span> <span class="o">=</span> <span class="n">img_obj</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+<span class="n">orig_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img_obj</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">usid</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">plot_map</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">orig_image</span><span class="p">,</span> <span class="n">num_ticks</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Image of shape: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">orig_image</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Image of shape: (256, 256)&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_examples_image_5_1.png" src="../../_images/notebooks_examples_image_5_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="h5USID-File">
+<h2>h5USID File<a class="headerlink" href="#h5USID-File" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Download from GitHub<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Similarly the corresponding h5USID dataset is also available on the USID repository. Here, we will simply download the file using <code class="docutils literal notranslate"><span class="pre">wget</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">h5_path</span> <span class="o">=</span> <span class="s1">&#39;temp.h5&#39;</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/pycroscopy/USID/master/data/simulated_STEM_Image.h5&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">h5_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">h5_path</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">h5_path</span><span class="p">,</span> <span class="n">bar</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Open-the-file">
+<h3>Open the file<a class="headerlink" href="#Open-the-file" title="Permalink to this headline">¶</a></h3>
+<p>Let us open the file and look at its contents using <a class="reference external" href="https://pycroscopy.github.io/sidpy/notebooks/03_hdf5/hdf_utils_read.html#print_tree()">sidpy.hdf_utils.print_tree()</a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">h5_file</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">h5_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">usid</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><span class="n">h5_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+/
+├ Measurement_000
+  ---------------
+  ├ Channel_000
+    -----------
+    ├ Position_Indices
+    ├ Position_Values
+    ├ Raw_Data
+    ├ Spectroscopic_Indices
+    ├ Spectroscopic_Values
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Access-the-Main-Dataset-containing-the-image-of-interest">
+<h2>Access the <code class="docutils literal notranslate"><span class="pre">Main</span></code> Dataset containing the image of interest<a class="headerlink" href="#Access-the-Main-Dataset-containing-the-image-of-interest" title="Permalink to this headline">¶</a></h2>
+<p>Clearly, this file contains a single <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> which has a single <a class="reference external" href="../../usid_model.html#channels">Channel</a>. We can access the <a class="reference external" href="../../usid_model.html#main-datasets">Main Dataset</a> where all the information is located in multiple ways. Given that this file contains just a single <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code> we can conveniently use the <a class="reference external" href="https://pycroscopy.github.io/sidpy/notebooks/03_hdf5/hdf_utils_read.html#get_all_main()">pyUSID.hdf_utils.get_all_main()</a> function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">h5_main</span> <span class="o">=</span> <span class="n">usid</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_all_main</span><span class="p">(</span><span class="n">h5_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;HDF5 dataset &#34;Raw_Data&#34;: shape (65536, 1), type &#34;|u1&#34;&gt;
+located at:
+        /Measurement_000/Channel_000/Raw_Data
+Data contains:
+        Intensity (a.u.)
+Data dimensions and original shape:
+Position Dimensions:
+        X - size: 256
+        Y - size: 256
+Spectroscopic Dimensions:
+        None - size: 1
+Data Type:
+        uint8
+</pre></div></div>
+</div>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">h5_main</span></code> is a <a class="reference external" href="https://pycroscopy.github.io/pyUSID/notebooks/user_guide/usi_dataset.html">USIDataset</a>, which can be thought of as a supercharged HDF5 Dataset that is not only aware of the contents of the plain <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code> dataset but also its links to the <a class="reference external" href="../../usid_model.html#ancillary-datasets">Ancillary Datasets</a> that make it a <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code>.</p>
+</div>
+<div class="section" id="Understanding-Dimensionality">
+<h2>Understanding Dimensionality<a class="headerlink" href="#Understanding-Dimensionality" title="Permalink to this headline">¶</a></h2>
+<p>What is more is that the above print statement shows that this <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code> has two <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Dimensions</span></code> - <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Y</span></code> each of size <code class="docutils literal notranslate"><span class="pre">256</span></code> and a single <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Dimension</span></code> - <code class="docutils literal notranslate"><span class="pre">None</span></code> which was never varied at each of the locations in the dataset. Therefore, this dataset is really just a simple 2D dataset with both dimensions being position dimensions. In other words, this dataset is just a simple 2D spatial / locations map.</p>
+<p>The original shape of the source image was <code class="docutils literal notranslate"><span class="pre">(256,</span> <span class="pre">256)</span></code>. However, recall that USID requires all position dimensions to be flattened along the first axis and all spectroscopic dimensions to be flattened along the second axis of the <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code>. In other words, this means that the image needs to be represented as a <code class="docutils literal notranslate"><span class="pre">(256</span> <span class="pre">*</span> <span class="pre">256,</span> <span class="pre">1)</span></code> in USID. In USID, this shape needs to (explicitly) include a spectroscopic axis to state that a single data point was recorded at each location.</p>
+</div>
+<div class="section" id="Visualize-the-Main-Dataset">
+<h2>Visualize the <code class="docutils literal notranslate"><span class="pre">Main</span></code> Dataset<a class="headerlink" href="#Visualize-the-Main-Dataset" title="Permalink to this headline">¶</a></h2>
+<p>Now lets visualize the contents within this <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code> using the <code class="docutils literal notranslate"><span class="pre">USIDataset's</span></code> built-in <a class="reference external" href="../user_guide/usi_dataset.html#Interactive-Visualization">visualize()</a> function. Clearly, this dataset is indeed a simple 2D image</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">usid</span><span class="o">.</span><span class="n">plot_utils</span><span class="o">.</span><span class="n">use_nice_plot_params</span><span class="p">()</span>
+<span class="n">h5_main</span><span class="o">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">num_ticks</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 432x288 with 2 Axes&gt;,
+ &lt;AxesSubplot:title={&#39;center&#39;:&#39;/Measurement_000/Channel_000/Raw_Data&#39;}, xlabel=&#39;Y (nm) x $10^{-9}$&#39;, ylabel=&#39;X (nm) x $10^{-9}$&#39;&gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_examples_image_13_1.png" src="../../_images/notebooks_examples_image_13_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Ancillary-Datasets">
+<h2>Ancillary Datasets<a class="headerlink" href="#Ancillary-Datasets" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned in the documentation on USID, <code class="docutils literal notranslate"><span class="pre">Ancillary</span> <span class="pre">Datasets</span></code> are required to complete the information for any dataset. Specifically, these datasets need to provide information about the values against which measurements were acquired, in addition to explaining the original dimensionality (2 in this case) of the original dataset. Let’s look at the ancillary datasets and see what sort of information they provide. We can access the <code class="docutils literal notranslate"><span class="pre">Ancillary</span> <span class="pre">Datasets</span></code> linked to the <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code>
+(<code class="docutils literal notranslate"><span class="pre">h5_main</span></code>) just like a property of the object.</p>
+</div>
+<div class="section" id="Ancillary-Position-Datasets">
+<h2>Ancillary Position Datasets<a class="headerlink" href="#Ancillary-Position-Datasets" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Position Indices:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_pos_inds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Position Values:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_pos_vals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Position Indices:
+-------------------------
+&lt;HDF5 dataset &#34;Position_Indices&#34;: shape (65536, 2), type &#34;&lt;u4&#34;&gt;
+
+Position Values:
+-------------------------
+&lt;HDF5 dataset &#34;Position_Values&#34;: shape (65536, 2), type &#34;&lt;f4&#34;&gt;
+</pre></div></div>
+</div>
+<p>Recall from the USID definition that the shape of the Position Ancillary datasets is <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">P)</span></code> where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the number of Position dimensions and the <code class="docutils literal notranslate"><span class="pre">P</span></code> is the number of locations over which data was recorded. Here, we have two position dimensions. Therefore <code class="docutils literal notranslate"><span class="pre">N</span></code> is <code class="docutils literal notranslate"><span class="pre">2</span></code>. <code class="docutils literal notranslate"><span class="pre">P</span></code> matches with the first axis of the shape of <code class="docutils literal notranslate"><span class="pre">h5_main</span></code> which is <code class="docutils literal notranslate"><span class="pre">65536</span></code>. Generally, there is no need to remember these rules or construct these ancillary datasets manually since pyUSID has several functions
+that automatically simplify this process.</p>
+<div class="section" id="Visualize-the-contents-of-the-Position-Ancillary-Datasets">
+<h3>Visualize the contents of the Position Ancillary Datasets<a class="headerlink" href="#Visualize-the-contents-of-the-Position-Ancillary-Datasets" title="Permalink to this headline">¶</a></h3>
+<p>Notice below that there are two sets of lines, one for each dimension. The blue lines on the left-hand column appear solid simply because this dimension (<code class="docutils literal notranslate"><span class="pre">X</span></code> or columns) varies much faster than the other dimension (<code class="docutils literal notranslate"><span class="pre">Y</span></code> or rows). The first few rows of the dataset are visualized on the right-hand column.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">all_axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">axes</span><span class="p">,</span> <span class="n">h5_pos_dset</span><span class="p">,</span> <span class="n">dset_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">all_axes</span><span class="p">,</span>
+                                        <span class="p">[</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_pos_inds</span><span class="p">,</span> <span class="n">h5_main</span><span class="o">.</span><span class="n">h5_pos_vals</span><span class="p">],</span>
+                                        <span class="p">[</span><span class="s1">&#39;Position Indices&#39;</span><span class="p">,</span> <span class="s1">&#39;Position Values&#39;</span><span class="p">]):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">h5_pos_dset</span><span class="p">[()])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Full dataset&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;First 1024 rows only&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">h5_pos_dset</span><span class="p">[:</span><span class="mi">1024</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">:</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Row in &#39;</span> <span class="o">+</span> <span class="n">dset_name</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">dset_name</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">pos_dim_labels</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">all_axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">pos_dim_descriptors</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_examples_image_17_0.png" src="../../_images/notebooks_examples_image_17_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Making-sense-of-the-visualization">
+<h3>Making sense of the visualization<a class="headerlink" href="#Making-sense-of-the-visualization" title="Permalink to this headline">¶</a></h3>
+<p>Given that the columns vary faster than the rows means that the contents of each row of the image have been stored end-to-end in the <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code> as opposed to on top of each other as in the original 2D image.</p>
+</div>
+<div class="section" id="Attributes-associated-with-the-Position-Indices-Dataset">
+<h3>Attributes associated with the Position Indices Dataset<a class="headerlink" href="#Attributes-associated-with-the-Position-Indices-Dataset" title="Permalink to this headline">¶</a></h3>
+<p>Just looking at the shape and values of the Position ancillary datasets does not provide all the information. Recall that the ancillary datasets need to have some mandatory attributes like <code class="docutils literal notranslate"><span class="pre">labels</span></code> and <code class="docutils literal notranslate"><span class="pre">units</span></code> that describe the quantity and units for each of the dimensions:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_pos_inds</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+X : &lt;HDF5 region reference&gt;
+Y : &lt;HDF5 region reference&gt;
+labels : [&#39;X&#39; &#39;Y&#39;]
+units : [&#39;nm&#39; &#39;nm&#39;]
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Ancillary-Spectroscopic-Datasets">
+<h2>Ancillary Spectroscopic Datasets<a class="headerlink" href="#Ancillary-Spectroscopic-Datasets" title="Permalink to this headline">¶</a></h2>
+<p>Given that this is a 2D image where data was not acquired as a function of some independent parameter at each location, the spectroscopic datasets will contain bare minimum information</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spectroscopic Indices:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_spec_inds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;containing:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_spec_inds</span><span class="p">[()])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Spectroscopic Values:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_spec_vals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;containing:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_spec_vals</span><span class="p">[()])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Spectroscopic Indices:
+-------------------------
+&lt;HDF5 dataset &#34;Spectroscopic_Indices&#34;: shape (1, 1), type &#34;&lt;u4&#34;&gt;
+containing:
+[[0]]
+
+Spectroscopic Values:
+-------------------------
+&lt;HDF5 dataset &#34;Spectroscopic_Values&#34;: shape (1, 1), type &#34;&lt;f4&#34;&gt;
+containing:
+[[1.]]
+</pre></div></div>
+</div>
+<p>Note that as explained above, these spectroscopic datasets only contain a single value for the <code class="docutils literal notranslate"><span class="pre">fake</span></code> spectroscopic axis over which the data was collected. Regardless of the fact that a single data poing was collected at each location, the Spectroscopic datasets should be two dimensional in shape (one element in each axis) according the USID rules.</p>
+<p>Regardless of how uninformative the spectroscopic Datasets seem for this specific example, they are still necessary for the <code class="docutils literal notranslate"><span class="pre">Raw_Data</span></code> dataset to be a <code class="docutils literal notranslate"><span class="pre">Main</span> <span class="pre">Dataset</span></code>.</p>
+<div class="section" id="Attributes-within-the-Spectroscopic-Indices-Dataset">
+<h3>Attributes within the Spectroscopic Indices Dataset<a class="headerlink" href="#Attributes-within-the-Spectroscopic-Indices-Dataset" title="Permalink to this headline">¶</a></h3>
+<p>Again, the attributes of Spectroscopic Datasets show mandatory information about the Spectroscopic dimensions such as the quantity (<code class="docutils literal notranslate"><span class="pre">labels</span></code>) and <code class="docutils literal notranslate"><span class="pre">units</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">h5_spec_inds</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+None : &lt;HDF5 region reference&gt;
+labels : [&#39;None&#39;]
+units : [&#39;a.u.&#39;]
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Attempting-to-visualize-the-first-few-rows-of-the-image-manually">
+<h2>Attempting to visualize the first few rows of the image manually<a class="headerlink" href="#Attempting-to-visualize-the-first-few-rows-of-the-image-manually" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">pos_dim_labels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h5_main</span><span class="o">.</span><span class="n">pos_dim_sizes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;X&#39;, &#39;Y&#39;]
+[256, 256]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rows_to_read</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">num_cols</span> <span class="o">=</span> <span class="n">h5_main</span><span class="o">.</span><span class="n">pos_dim_sizes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">first_few_rows_1D</span> <span class="o">=</span> <span class="n">h5_main</span><span class="p">[:</span> <span class="n">rows_to_read</span> <span class="o">*</span> <span class="n">num_cols</span><span class="p">,</span> <span class="p">:]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first_few_rows_1D</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(12800, 1)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">first_few_rows_2D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">first_few_rows_1D</span><span class="p">,</span> <span class="p">(</span><span class="n">rows_to_read</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first_few_rows_2D</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(50, 256)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">first_few_rows_2D</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.image.AxesImage at 0x7fce9c2664c0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_examples_image_28_1.png" src="../../_images/notebooks_examples_image_28_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Clean-up">
+<h2>Clean up<a class="headerlink" href="#Clean-up" title="Permalink to this headline">¶</a></h2>
+<p>Finally lets close the HDF5 file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">h5_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Here, we will even delete the HDF5 file in addition to the source 2D image. Please comment out the following lines if you want to look at the HDF5 file using software like HDFView or work with the 2D image</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">h5_path</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="spectral_image.html" class="btn btn-neutral float-right" title="3D Spectral Image" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="spectrum.html" class="btn btn-neutral float-left" title="1D Spectrum or Curve" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Stephen Jesse, Suhas Somnath and Chris Smith.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

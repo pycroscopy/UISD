@@ -1,0 +1,581 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 2D Image\n",
+    "\n",
+    "**Suhas Somnath**\n",
+    "\n",
+    "10/12/2018\n",
+    "\n",
+    "**This example illustrates how a 2D grayscale image would be represented in the Universal Spectroscopy and\n",
+    "Imaging Data (USID) schema and stored in a Hierarchical Data Format (HDF5) file, also referred to as the h5USID file.**\n",
+    "\n",
+    "This document is intended as a supplement to the explanation about the [USID model](../../usid_model.html)\n",
+    "\n",
+    "Please consider downloading this document as a Jupyter notebook using the button at the bottom of this document.\n",
+    "\n",
+    "Prerequisites:\n",
+    "--------------\n",
+    "We recommend that you read about the [USID model](../../usid_model.htm)\n",
+    "\n",
+    "We will be making use of the ``pyUSID`` package at multiple places to illustrate the central point. While it is\n",
+    "recommended / a bonus, it is not absolutely necessary that the reader understands how the specific ``pyUSID`` functions\n",
+    "work or why they were used in order to understand the data representation itself.\n",
+    "Examples about these functions can be found in other documentation on pyUSID and the reader is encouraged to read the\n",
+    "supplementary documents.\n",
+    "\n",
+    "### Import all necessary packages\n",
+    "The main packages necessary for this example are ``h5py``, ``PIL`` (pillow), ``matplotlib``, and ``sidpy``, in addition to ``pyUSID``:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "import subprocess\n",
+    "import sys\n",
+    "import os\n",
+    "from warnings import warn\n",
+    "import h5py\n",
+    "import numpy as np\n",
+    "from PIL import Image\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "%matplotlib inline\n",
+    "\n",
+    "\n",
+    "def install(package):\n",
+    "    subprocess.call([sys.executable, \"-m\", \"pip\", \"install\", package])\n",
+    "\n",
+    "\n",
+    "try:\n",
+    "    # This package is not part of anaconda and may need to be installed.\n",
+    "    import wget\n",
+    "except ImportError:\n",
+    "    warn('wget not found.  Will install with pip.')\n",
+    "    import pip\n",
+    "    install('wget')\n",
+    "    import wget\n",
+    "\n",
+    "# Finally import pyUSID.\n",
+    "try:\n",
+    "    import pyUSID as usid\n",
+    "    import sidpy\n",
+    "except ImportError:\n",
+    "    warn('pyUSID not found.  Will install with pip.')\n",
+    "    import pip\n",
+    "    install('pyUSID')\n",
+    "    import sidpy\n",
+    "    import pyUSID as usid"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Source image\n",
+    "-------------\n",
+    "For this example, we will be working with a simple grayscale image.\n",
+    "\n",
+    "### Download from GitHub\n",
+    "As mentioned earlier, this image is available on the USID repository and can be accessed directly as well.\n",
+    "Here, we will simply download the file using ``wget``:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "image_path = 'temp.tif'\n",
+    "url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/simulated_STEM_Image.tif'\n",
+    "if os.path.exists(image_path):\n",
+    "    os.remove(image_path)\n",
+    "_ = wget.download(url, image_path, bar=None)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### More about this image\n",
+    "Lets visualize this image and learn about its original shape:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "img_obj = Image.open(image_path)\n",
+    "# Convert to grayscale:\n",
+    "img_obj = img_obj.convert(mode=\"L\")\n",
+    "orig_image = np.asarray(img_obj)\n",
+    "\n",
+    "fig, axis = plt.subplots()\n",
+    "usid.plot_utils.plot_map(axis, orig_image, num_ticks=5)\n",
+    "axis.set_title('Image of shape: {}'.format(orig_image.shape))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "h5USID File\n",
+    "-----------\n",
+    "### Download from GitHub\n",
+    "Similarly the corresponding h5USID dataset is also available on the USID repository.\n",
+    "Here, we will simply download the file using ``wget``:\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "h5_path = 'temp.h5'\n",
+    "url = 'https://raw.githubusercontent.com/pycroscopy/USID/master/data/simulated_STEM_Image.h5'\n",
+    "if os.path.exists(h5_path):\n",
+    "    os.remove(h5_path)\n",
+    "_ = wget.download(url, h5_path, bar=None)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Open the file\n",
+    "Let us open the file and look at its contents using\n",
+    "[sidpy.hdf_utils.print_tree()](https://pycroscopy.github.io/sidpy/notebooks/03_hdf5/hdf_utils_read.html#print_tree())\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "h5_file = h5py.File(h5_path, mode='r')\n",
+    "usid.hdf_utils.print_tree(h5_file)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Access the ``Main`` Dataset containing the image of interest\n",
+    "------------------------------------------------------------\n",
+    "Clearly, this file contains a single `Measurement` which has a single [Channel](../../usid_model.html#channels).\n",
+    "We can access the [Main Dataset](../../usid_model.html#main-datasets) where all the information is located in\n",
+    "multiple ways. Given that this file contains just a single ``Main Dataset`` we can conveniently use the\n",
+    "[pyUSID.hdf_utils.get_all_main()](https://pycroscopy.github.io/sidpy/notebooks/03_hdf5/hdf_utils_read.html#get_all_main()) function.\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "h5_main = usid.hdf_utils.get_all_main(h5_file)[-1]\n",
+    "print(h5_main)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here, ``h5_main`` is a [USIDataset](https://pycroscopy.github.io/pyUSID/notebooks/user_guide/usi_dataset.html), which can be thought of as a supercharged\n",
+    "HDF5 Dataset that is not only aware of the contents of the plain ``Raw_Data`` dataset but also its links to the\n",
+    "[Ancillary Datasets](../../usid_model.html#ancillary-datasets) that make it a ``Main Dataset``.\n",
+    "\n",
+    "Understanding Dimensionality\n",
+    "----------------------------\n",
+    "What is more is that the above print statement shows that this ``Main Dataset`` has two ``Position Dimensions`` -\n",
+    "``X`` and ``Y`` each of size ``256`` and a single ``Spectroscopic Dimension`` - ``None`` which was never varied\n",
+    "at each of the locations in the dataset.\n",
+    "Therefore, this dataset is really just a simple 2D dataset with both dimensions being position dimensions.\n",
+    "In other words, this dataset is just a simple 2D spatial / locations map.\n",
+    "\n",
+    "The original shape of the source image was ``(256, 256)``. However, recall that USID requires all position dimensions\n",
+    "to be flattened along the first axis and all spectroscopic dimensions to be flattened along the second axis of the\n",
+    "``Main Dataset``. In other words, this means that the image needs to be represented as a ``(256 * 256, 1)`` in USID.\n",
+    "In USID, this shape needs to (explicitly) include a spectroscopic axis to state that a single data point was recorded\n",
+    "at each location.\n",
+    "\n",
+    "Visualize the ``Main`` Dataset\n",
+    "--------------------------\n",
+    "Now lets visualize the contents within this ``Main Dataset`` using the ``USIDataset's`` built-in\n",
+    "[visualize()](../user_guide/usi_dataset.html#Interactive-Visualization) function. Clearly, this dataset is indeed\n",
+    "a simple 2D image\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "usid.plot_utils.use_nice_plot_params()\n",
+    "h5_main.visualize(num_ticks=5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Ancillary Datasets\n",
+    "------------------\n",
+    "As mentioned in the documentation on USID, ``Ancillary Datasets`` are required to complete the information for any\n",
+    "dataset. Specifically, these datasets need to provide information about the values against which measurements were\n",
+    "acquired, in addition to explaining the original dimensionality (2 in this case) of the original dataset. Let's look\n",
+    "at the ancillary datasets and see what sort of information they provide. We can access the ``Ancillary Datasets``\n",
+    "linked to the ``Main Dataset`` (``h5_main``) just like a property of the object.\n",
+    "\n",
+    "Ancillary Position Datasets\n",
+    "---------------------------\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "print('Position Indices:')\n",
+    "print('-------------------------')\n",
+    "print(h5_main.h5_pos_inds)\n",
+    "print('\\nPosition Values:')\n",
+    "print('-------------------------')\n",
+    "print(h5_main.h5_pos_vals)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Recall from the USID definition that the shape of the Position Ancillary datasets is ``(N, P)`` where ``N`` is the\n",
+    "number of Position dimensions and the ``P`` is the number of locations over which data was recorded. Here, we have\n",
+    "two position dimensions. Therefore ``N`` is ``2``. ``P`` matches with the first axis of the shape of ``h5_main``\n",
+    "which is ``65536``. Generally, there is no need to remember these rules or construct these ancillary datasets\n",
+    "manually since pyUSID has several functions that automatically simplify this process.\n",
+    "\n",
+    "### Visualize the contents of the Position Ancillary Datasets\n",
+    "Notice below that there are two sets of lines, one for each dimension. The blue lines on the left-hand column\n",
+    "appear solid simply because this dimension (``X`` or columns) varies much faster than the other dimension (``Y`` or\n",
+    "rows). The first few rows of the dataset are visualized on the right-hand column.\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "fig, all_axes = plt.subplots(ncols=2, nrows=2, figsize=(8, 8))\n",
+    "\n",
+    "for axes, h5_pos_dset, dset_name in zip(all_axes,\n",
+    "                                        [h5_main.h5_pos_inds, h5_main.h5_pos_vals],\n",
+    "                                        ['Position Indices', 'Position Values']):\n",
+    "    axes[0].plot(h5_pos_dset[()])\n",
+    "    axes[0].set_title('Full dataset')\n",
+    "    axes[1].set_title('First 1024 rows only')\n",
+    "    axes[1].plot(h5_pos_dset[:1024])\n",
+    "    for axis in axes.flat:\n",
+    "        axis.set_xlabel('Row in ' + dset_name)\n",
+    "        axis.set_ylabel(dset_name)\n",
+    "        axis.legend(h5_main.pos_dim_labels)\n",
+    "\n",
+    "for axis in all_axes[1]:\n",
+    "    axis.legend(h5_main.pos_dim_descriptors)\n",
+    "\n",
+    "fig.tight_layout()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Making sense of the visualization\n",
+    "Given that the columns vary faster\n",
+    "than the rows means that the contents of each row of the image have been stored end-to-end in the ``Main Dataset``\n",
+    "as opposed to on top of each other as in the original 2D image.\n",
+    "\n",
+    "### Attributes associated with the Position Indices Dataset\n",
+    "Just looking at the shape and values of the Position ancillary datasets does not provide all the information.\n",
+    "Recall that the ancillary datasets need to have some mandatory attributes like ``labels`` and ``units`` that\n",
+    "describe the quantity and units for each of the dimensions:\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "for key, val in sidpy.hdf_utils.get_attributes(h5_main.h5_pos_inds).items():\n",
+    "    print('{} : {}'.format(key, val))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Ancillary Spectroscopic Datasets\n",
+    "--------------------------------\n",
+    "Given that this is a 2D image where data was not acquired as a function of some independent parameter at each\n",
+    "location, the spectroscopic datasets will contain bare minimum information\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "print('Spectroscopic Indices:')\n",
+    "print('-------------------------')\n",
+    "print(h5_main.h5_spec_inds)\n",
+    "print('containing:')\n",
+    "print(h5_main.h5_spec_inds[()])\n",
+    "print('\\nSpectroscopic Values:')\n",
+    "print('-------------------------')\n",
+    "print(h5_main.h5_spec_vals)\n",
+    "print('containing:')\n",
+    "print(h5_main.h5_spec_vals[()])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that as explained above, these spectroscopic datasets only contain a single value for the `fake` spectroscopic\n",
+    "axis over which the data was collected. Regardless of the fact that a single data poing was collected at each\n",
+    "location, the Spectroscopic datasets should be two dimensional in shape (one element in each axis) according the\n",
+    "USID rules.\n",
+    "\n",
+    "Regardless of how uninformative the spectroscopic Datasets seem for this specific example, they are still necessary\n",
+    "for the ``Raw_Data`` dataset to be a ``Main Dataset``.\n",
+    "\n",
+    "### Attributes within the Spectroscopic Indices Dataset\n",
+    "Again, the attributes of Spectroscopic Datasets show mandatory information about the Spectroscopic dimensions such as\n",
+    "the quantity (``labels``) and ``units``:\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "for key, val in sidpy.hdf_utils.get_attributes(h5_main.h5_spec_inds).items():\n",
+    "    print('{} : {}'.format(key, val))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Attempting to visualize the first few rows of the image manually\n",
+    "----------------------------------------------------------------\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "print(h5_main.pos_dim_labels)\n",
+    "print(h5_main.pos_dim_sizes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "rows_to_read = 50\n",
+    "num_cols = h5_main.pos_dim_sizes[1]\n",
+    "first_few_rows_1D = h5_main[: rows_to_read * num_cols, :]\n",
+    "print(first_few_rows_1D.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "first_few_rows_2D = np.reshape(first_few_rows_1D, (rows_to_read, num_cols))\n",
+    "print(first_few_rows_2D.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "fig, axis = plt.subplots(figsize=(4, 1))\n",
+    "axis.imshow(first_few_rows_2D, origin='lower')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Clean up\n",
+    "--------\n",
+    "Finally lets close the HDF5 file.\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "h5_file.close()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here, we will even delete the HDF5 file in addition to the source 2D image. Please comment out the following lines if\n",
+    "you want to look at the HDF5 file using software like HDFView or work with the 2D image\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "jupyter": {
+     "outputs_hidden": false
+    }
+   },
+   "outputs": [],
+   "source": [
+    "os.remove(h5_path)\n",
+    "os.remove(image_path)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

@@ -1,0 +1,1201 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Data Schema &mdash; USID 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="File Format" href="file_format.html" />
+    <link rel="prev" title="Nomenclature" href="nomenclature.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> USID
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">USID</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">Universal Spectroscopy and Imaging Data  (USID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="motivation.html">Motivation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nomenclature.html">Nomenclature</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Schema</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#existing-data-schemas">Existing data schemas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usid">USID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-datasets"><code class="docutils literal notranslate"><span class="pre">Main</span></code> Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spectrum">Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gray-scale-images">Gray-scale images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spectral-maps">Spectral maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#high-dimensional-data">High dimensional data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-measurements">Non Measurements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complicated">Complicated?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compound-datasets">Compound Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#videos">Videos</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ancillary-datasets"><code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> Datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gray-scale-image">Gray-scale image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Spectral maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">High dimensional data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#channels">Channels</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file_format.html">File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="h5_usid.html">USID in HDF5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_topics.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently asked questions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/examples/index.html">Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">USID</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Data Schema</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/usid_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="data-schema">
+<h1><a class="toc-backref" href="#id11">Data Schema</a><a class="headerlink" href="#data-schema" title="Permalink to this headline">¶</a></h1>
+<p><strong>Suhas Somnath</strong></p>
+<p>8/8/2017</p>
+<p>In this main document we describe how imaging and spectroscopy data can be structured in the <strong>Universal Spectroscopy and Imaging Data (USID)</strong> schema.
+We have a separate document on <a class="reference external" href="./h5_usid.html">specifications</a> that describes how this abstract data schema can be
+incorporated and used in <a class="reference external" href="./file_format.html">hierarchical data format</a> (<strong>HDF5</strong>) files</p>
+<p><a class="reference external" href="https://www.ornl.gov/staff-profile/alex-belianinov">Alex Belianinonv</a> and
+<a class="reference external" href="https://scholar.google.com/citations?user=uiTAx2cAAAAJ&amp;hl=en">Stephen Jesse</a>,
+conceived the central theme of <strong>USID</strong> while Suhas Somnath and Chris R. Smith developed subsequent versions and refinements
+of <strong>USID</strong> and developed the <a class="reference external" href="./h5_usid.html">specifications</a> for implementing <strong>USID</strong> in <a class="reference external" href="./file_format.html">HDF5</a> files</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#data-schema" id="id11">Data Schema</a></p>
+<ul>
+<li><p><a class="reference internal" href="#existing-data-schemas" id="id12">Existing data schemas</a></p></li>
+<li><p><a class="reference internal" href="#usid" id="id13">USID</a></p></li>
+<li><p><a class="reference internal" href="#main-datasets" id="id14"><code class="docutils literal notranslate"><span class="pre">Main</span></code> Datasets</a></p>
+<ul>
+<li><p><a class="reference internal" href="#spectrum" id="id15">Spectrum</a></p></li>
+<li><p><a class="reference internal" href="#gray-scale-images" id="id16">Gray-scale images</a></p></li>
+<li><p><a class="reference internal" href="#spectral-maps" id="id17">Spectral maps</a></p></li>
+<li><p><a class="reference internal" href="#high-dimensional-data" id="id18">High dimensional data</a></p></li>
+<li><p><a class="reference internal" href="#non-measurements" id="id19">Non Measurements</a></p></li>
+<li><p><a class="reference internal" href="#complicated" id="id20">Complicated?</a></p></li>
+<li><p><a class="reference internal" href="#compound-datasets" id="id21">Compound Datasets</a></p></li>
+<li><p><a class="reference internal" href="#videos" id="id22">Videos</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ancillary-datasets" id="id23"><code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> Datasets</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id24">Spectrum</a></p></li>
+<li><p><a class="reference internal" href="#gray-scale-image" id="id25">Gray-scale image</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id26">Spectral maps</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id27">High dimensional data</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#channels" id="id28">Channels</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="existing-data-schemas">
+<h2><a class="toc-backref" href="#id12">Existing data schemas</a><a class="headerlink" href="#existing-data-schemas" title="Permalink to this headline">¶</a></h2>
+<p>No one really wants yet another data schema or file format in their lives.
+Like everyone else, we wanted to adopt a framework put together by other experts who had thought long and hard about the challenges.
+We explored the feasibility of several data models and file formats from within and beyond imaging and microscopy.
+However, in most cases, there were some important shortcomings which made it infeasible for us to adopt existing solutions.</p>
+<p>Below, we list some of the many solutions we explored. In many cases, the data schema / model is tied very closely with the file format.
+In general, we observed two basic kinds of existing data models:</p>
+<ol class="arabic simple">
+<li><p><strong>Text</strong> - Most of these are markup language based:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://aip.scitation.org/doi/pdf/10.1063/1.1639706">Scanning Probe Microscopy Markup Language (SPMML)</a></p></li>
+<li><p><a class="reference external" href="https://www.matml.org/downloads/matml_data.pdf">MatML</a></p></li>
+</ol>
+</li>
+<li><p><strong>Binary</strong></p>
+<ol class="arabic simple">
+<li><p>HDF5-based</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4453170/">NeXus</a></p></li>
+<li><p><a class="reference external" href="https://pdfs.semanticscholar.org/1c12/fdeb6f428f73e5974da0f0f3aca6d09d163e.pdf">Data Exchange</a></p></li>
+<li><p><a class="reference external" href="http://iopscience.iop.org/article/10.1088/0965-0393/18/6/065008/meta">Multidimensional eXtensible Archive (MXA)</a></p></li>
+<li><p><a class="reference external" href="https://emdatasets.com/format/">Electron Microscopy Data (EMD)</a></p></li>
+<li><p><a class="reference external" href="https://eudat.eu/sites/default/files/PaNdata_0.pdf">PaNData</a></p></li>
+<li><p><a class="reference external" href="http://hyperspy.org/hyperspy-doc/current/user_guide/io.html#hspy-hyperspy-s-hdf5-specification">Format used by HyperSpy</a></p></li>
+<li><p><a class="reference external" href="https://link.springer.com/article/10.1186/2193-9772-3-5">Format used by DREAM.3D</a></p></li>
+</ol>
+</li>
+<li><p>Other</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.microscopy.org/resources/HMSA_Specification.pdf">HMSA</a></p></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>Image</strong></p>
+<ol class="arabic simple">
+<li><p>OME-TIFF</p></li>
+</ol>
+</li>
+</ol>
+<p>Most of these models were designed rigidly around specific class of instruments, specific modalities, coordinate systems (Cartesian only with
+no option for polar coordinates etc.), or for specific scientific communities such as the climate research, X-ray microscopy, etc.
+We found models tied to plain-text-based file formats of data limiting, especially in the age of large multidimensional datasets.
+While most of the data models tied to binary file formats can certainly represent the vast majority of data, we found all of them lacking
+in one critically important area – none besides HMSA can represent large datasets without an N-dimensional form. Furthermore, most models
+also assume experimental variables would only be varied in a linearly increasing or decreasing manner for all dimensions. Such models would
+preclude the representation of those modalities where a variable was varied as a sine or a bipolar triangle. The closest and most general
+model we found was the HMSA. While compromising user-friendliness for ultimate generalization is acceptable, the vulnerability of this model
+is not – the potential separation or loss of the metadata file from the data file would render the dataset useless.</p>
+</div>
+<div class="section" id="usid">
+<h2><a class="toc-backref" href="#id13">USID</a><a class="headerlink" href="#usid" title="Permalink to this headline">¶</a></h2>
+<p>Information in <strong>USID</strong> are stored in three main kinds of datasets:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Main</span></code> datasets that contain the raw measurements recorded from
+the instrument as well as results from processing or analysis routines
+applied to the data</p></li>
+<li><p>Mandatory <code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> datasets that are necessary to explain the
+<code class="docutils literal notranslate"><span class="pre">main</span></code> data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Extra</span></code> datasets store any other data that may be of value</p></li>
+</ol>
+<p>In addition to datasets, the data schema is highly reliant on metadata that capture
+smaller pieces but critical pieces of information such as the
+<code class="docutils literal notranslate"><span class="pre">quantity</span></code> and <code class="docutils literal notranslate"><span class="pre">units</span></code> that describe every data point in the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset.</p>
+<p><strong>We acknowledge that this data schema is not trivial to understand at first glance but we are making every effort
+to make is simple to understand. If you ever find anything complicated or unclear, please</strong> <a class="reference external" href="./contact.html">write to us</a>
+<strong>and we will improve our documentation.</strong></p>
+</div>
+<div class="section" id="main-datasets">
+<h2><a class="toc-backref" href="#id14"><code class="docutils literal notranslate"><span class="pre">Main</span></code> Datasets</a><a class="headerlink" href="#main-datasets" title="Permalink to this headline">¶</a></h2>
+<p>Regardless of origin, modality or complexity, imaging data (and most scientific data for that matter) have one
+thing in common:</p>
+<p><strong>The same measurement / operation is performed at each spatial position</strong></p>
+<p>The <strong>USID</strong> schema is based on this one simple ground-truth.
+The data always has some <code class="docutils literal notranslate"><span class="pre">spatial</span> <span class="pre">dimensions</span></code> (X, Y, Z) and some
+<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code> (time, frequency, intensity, wavelength,
+temperature, cycle, voltage, etc.). <strong>In USID, the spatial
+dimensions are collapsed onto a single dimension and the spectroscopic
+dimensions are flattened into the second dimension.</strong> Thus, all data are
+stored as <strong>two dimensional arrays</strong>. The data would be arranged in the same manner that
+reflects the sequence in which the individual data points were collected. Examples below
+will simplify this data-representation paradigm significantly.</p>
+<p>In general, if a measurement of length <code class="docutils literal notranslate"><span class="pre">P</span></code> was recorded for each of <code class="docutils literal notranslate"><span class="pre">N</span></code> positions,
+it would be structured as shown in the table below here the prefixes <code class="docutils literal notranslate"><span class="pre">i</span></code> correspond to
+the positions and <code class="docutils literal notranslate"><span class="pre">j</span></code> for spectroscopic:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 11%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>i0, j0</p></td>
+<td><p>i0, j1</p></td>
+<td><p>i0, j2</p></td>
+<td><p>&lt;..&gt;</p></td>
+<td><p>i0, jP-2</p></td>
+<td><p>i0, jP-1</p></td>
+</tr>
+<tr class="row-even"><td><p>i1, j0</p></td>
+<td><p>i1, j1</p></td>
+<td><p>i1, j2</p></td>
+<td><p>&lt;..&gt;</p></td>
+<td><p>i1, jP-2</p></td>
+<td><p>i1, jP-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt;……&gt;</p></td>
+<td><p>&lt;……&gt;</p></td>
+<td><p>&lt;……&gt;</p></td>
+<td><p>&lt;..&gt;</p></td>
+<td><p>&lt;……..&gt;</p></td>
+<td><p>&lt;……..&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p>iN-2, j0</p></td>
+<td><p>iN-2, j1</p></td>
+<td><p>iN-2, j2</p></td>
+<td><p>&lt;..&gt;</p></td>
+<td><p>iN-2, jP-2</p></td>
+<td><p>iN-2, jP-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>iN-1, j0</p></td>
+<td><p>iN-1, j1</p></td>
+<td><p>iN-1, j2</p></td>
+<td><p>&lt;..&gt;</p></td>
+<td><p>iN-1, jP-1</p></td>
+<td><p>iN-1, jP-1</p></td>
+</tr>
+</tbody>
+</table>
+<p>A notion of chronology is attached to both the position and spectroscopic axes.
+In other words, the data for the second location (second row in the above table)
+was acquired after the first location (first row). The same applies to the spectroscopic axis as well.
+This is an important point to remember especially when information is recorded
+from multiple sources or channels (e.g. - data from different sensors) or if two or more numbers are <strong>necessary</strong> to
+give a particular observation / data point its correct meaning (e.g. - color images).
+This point will be clarified via examples that follow.</p>
+<p>While the data could indeed be stored in the original N-dimensional form,
+there are a few key <strong>advantages to the 2D structuring</strong>:</p>
+<ul class="simple">
+<li><p>The data is already of the <strong>same structure expected by machine learning algorithms</strong> and requires minimal
+to no pre-processing or post-processing. Briefly, the data is simply arranged in the standard form of <code class="docutils literal notranslate"><span class="pre">instances</span> <span class="pre">x</span> <span class="pre">features</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">instances</span></code> makes up the locations and <code class="docutils literal notranslate"><span class="pre">features</span></code> which contains all the observables per entry.</p></li>
+<li><p>In certain cases, the data simply <strong>cannot be represented in an N-dimensional form</strong> since one of the dimensions
+has multiple sizes in different contexts.</p></li>
+<li><p>Researchers want to acquire ever larger datasets that
+take much longer to acquire. This has necessitated approaches such as
+<strong>sparse sampling</strong> or <a class="reference external" href="https://en.wikipedia.org/wiki/Compressed_sensing">compressed sensing</a> wherein
+measurements are acquired from a few randomly sampled positions and the
+data for the rest of the positions are inferred using complex
+algorithms. Storing such sparse sampled data in the N dimensional form
+would balloon the size of the stored data even though the majority of the
+data is actually empty. Two dimensional datasets would allow the random
+measurements to be written without any empty sections.</p></li>
+<li><p>When acquiring measurement data, users often adjust experimental parameters
+during the experiment that may affect the size of the data, especially the
+spectral sizes. Thus, <strong>changes in experimental parameters</strong> would mean that the
+existing N dimensional set would have to be left partially (in most cases
+largely) empty and a new N dimensional dataset would have to be allocated
+with the first few positions left empty. In the case of flattened datasets,
+the current dataset can be truncated at the point of the parameter change
+and a new dataset can be created to start from the current measurement.
+Thus, no space would be wasted.</p></li>
+</ul>
+<p>Here are some examples of how some familiar data can be represented using
+this paradigm:</p>
+<div class="section" id="spectrum">
+<h3><a class="toc-backref" href="#id15">Spectrum</a><a class="headerlink" href="#spectrum" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/1D_spectra.svg" src="_images/1D_spectra.svg" /><p>This case encompasses examples such as a <strong>single</strong> Raman spectrum, force-distance curve in
+atomic force microscopy, current-voltage spectroscopy, etc. In this case, the measurement is recorded
+at a single location meaning that this dataset has a single <em>arbitrary</em> <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimension</span></code>
+of size 1. At this position, data is recorded as a
+function of a single variable (<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code>) such as <em>wavelength</em> or <em>frequency</em>.
+Thus, if the spectrum contained <code class="docutils literal notranslate"><span class="pre">S</span></code> data points, the <strong>USID</strong> representation of this
+data would be a <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">x</span> <span class="pre">S</span></code> matrix. The <code class="docutils literal notranslate"><span class="pre">quantity</span></code> represented in this data would be <strong>Amplitude</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After going through the corresponding discussion about <code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> datasets, the interested reader is recommended to
+explore <a class="reference external" href="./auto_examples/plot_1D_spectrum.html">this interactive example</a> on actual data.</p>
+</div>
+</div>
+<div class="section" id="gray-scale-images">
+<h3><a class="toc-backref" href="#id16">Gray-scale images</a><a class="headerlink" href="#gray-scale-images" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/2D_images.svg" src="_images/2D_images.svg" /><p>In such data, a single value (<code class="docutils literal notranslate"><span class="pre">quantity</span></code> is <em>intensity</em>) in is recorded
+at each location in a two dimensional grid. Thus, there are are two
+<code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code> - <em>X</em>, <em>Y</em>. The value at each pixel was not really acquired
+as a function of any variable so the data has one <em>arbitrary</em> <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code>.
+Thus, if the image had <code class="docutils literal notranslate"><span class="pre">P</span></code> rows and <code class="docutils literal notranslate"><span class="pre">Q</span></code> columns, it would have to be flattened and
+represented as a <code class="docutils literal notranslate"><span class="pre">P*Q</span> <span class="pre">x</span> <span class="pre">1</span></code> array according to the <strong>USID</strong> schema. The second
+axis has size of 1 since we only record one value (intensity) at each
+location. In theory, the flattened data could be arranged column-by-column (as in the figure above)
+and then row-by-row or vice-versa depending on how the data was (sequentially)
+captured. The sequence in this particular case is debatable in this particular example.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After going through the corresponding discussion about <code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> datasets, the interested reader is recommended to
+explore <a class="reference external" href="./auto_examples/plot_2D_image.html">this interactive example</a> on actual data.</p>
+</div>
+<p>Popular examples of such data include imaging data from raster scans (e.g. - height channel in atomic force microscopy),
+black-and-white photographs, scanning electron microscopy (SEM) images. etc.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After going through the corresponding discussion about <code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> datasets, the interested reader is recommended to
+explore <a class="reference external" href="./auto_examples/plot_2D_image_stack.html">this interactive example</a> on actual data.</p>
+</div>
+<p>Color images will be discussed separately below due to some very important subtleties about the
+measurement.</p>
+</div>
+<div class="section" id="spectral-maps">
+<h3><a class="toc-backref" href="#id17">Spectral maps</a><a class="headerlink" href="#spectral-maps" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/3D_map_of_spectra.svg" src="_images/3D_map_of_spectra.svg" /><p>If a spectrum of length <code class="docutils literal notranslate"><span class="pre">S</span></code> were acquired at each location in a two dimensional grid of positions
+with <code class="docutils literal notranslate"><span class="pre">P</span></code> rows and <code class="docutils literal notranslate"><span class="pre">Q</span></code> columns, it would result in a three dimensional dataset.
+This example is a combination of the two examples above. The above 3D dataset has two
+<code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code> - <em>X</em> and <em>Y</em>, and has one <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code> - <em>Frequency</em>.
+Each data point in the dataset contains the same physical <code class="docutils literal notranslate"><span class="pre">quantity</span></code> - <em>Amplitude</em>.
+In order to represent this 3D dataset in the 2D <strong>USID</strong> form, the two <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code>
+in such data would need to be flattened along the vertical axis and the spectrum at each position
+would be laid out along the horizontal axis or the spectroscopic axis.
+Thus the original <code class="docutils literal notranslate"><span class="pre">P</span> <span class="pre">x</span> <span class="pre">Q</span> <span class="pre">x</span> <span class="pre">S</span></code> 3D array would be flattened to a 2D array of shape - <code class="docutils literal notranslate"><span class="pre">P*Q</span> <span class="pre">x</span> <span class="pre">S</span></code>.
+Assuming that the data was acquired column-by-column and then row-by-row, the rows in the flattened
+2D dataset would also be laid out in the same manner: row<sub>0</sub>col<sub>0</sub>, row<sub>0</sub>col<sub>1</sub>, row<sub>0</sub>col<sub>2</sub>,
+… , row<sub>0</sub>col<sub>Q</sub>, row<sub>1</sub>col<sub>0</sub>, row<sub>1</sub>col<sub>1</sub>, …</p>
+<p>Popular examples of such datasets include Scanning Tunnelling Spectroscopy (STS) and
+current-voltage spectroscopy</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After going through the corresponding discussion about <code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> datasets, the interested reader is recommended to
+explore <a class="reference external" href="./auto_examples/plot_3D_spectral_image.html">this interactive example</a> on actual data.</p>
+</div>
+</div>
+<div class="section" id="high-dimensional-data">
+<h3><a class="toc-backref" href="#id18">High dimensional data</a><a class="headerlink" href="#high-dimensional-data" title="Permalink to this headline">¶</a></h3>
+<p>This general representation for data was developed to express datasets with 7, 8, 9, or higher dimensional datasets.</p>
+<p>The <strong>spectral map</strong> example above only had one <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code>. If spectra of length <code class="docutils literal notranslate"><span class="pre">S</span></code> were
+acquired for <code class="docutils literal notranslate"><span class="pre">T</span></code> different <em>Temperatures</em>, the resultant dataset would have two <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code> -
+<em>Frequency</em> and <em>Temperature</em> and would be of shape - <code class="docutils literal notranslate"><span class="pre">P</span> <span class="pre">x</span> <span class="pre">Q</span> <span class="pre">x</span> <span class="pre">T</span> <span class="pre">x</span> <span class="pre">S</span></code>. Just as the two <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code>
+were flattened along the vertical axis in the example above, now the two spectroscopic dimensions would also need
+to be flattened along the horizontal axis. Thus the horizontal axis would be flattend as:
+Temperature<sub>0</sub>Frequency<sub>0</sub>, Temperature<sub>0</sub>Frequency<sub>1</sub>,Temperature<sub>0</sub>Frequency<sub>2</sub>, …
+, Temperature<sub>0</sub>Frequency<sub>S</sub>, Temperature<sub>1</sub>Frequency<sub>0</sub>, Temperature<sub>1</sub>Frequency<sub>1</sub>, …
+This four dimensional dataset would be flattened into a two dimensional array of shape <code class="docutils literal notranslate"><span class="pre">P*Q</span> <span class="pre">x</span> <span class="pre">T*S</span></code>.</p>
+<p>In the same manner, one could keep adding additional dimensions to either the position or spectroscopic axis.</p>
+</div>
+<div class="section" id="non-measurements">
+<h3><a class="toc-backref" href="#id19">Non Measurements</a><a class="headerlink" href="#non-measurements" title="Permalink to this headline">¶</a></h3>
+<p>This same flattened representation can also be applied to results of data analyses or
+data that were not directly recorded from an instrument. Here are some examples:</p>
+<ul class="simple">
+<li><p>A collection of <code class="docutils literal notranslate"><span class="pre">k</span></code> chosen spectra would also be considered
+<code class="docutils literal notranslate"><span class="pre">Main</span></code> datasets since the data is still structured as
+<code class="docutils literal notranslate"><span class="pre">[instance,</span> <span class="pre">features]</span></code></p></li>
+<li><p>Similarly, the centroids obtained from a clustering algorithm like
+<code class="docutils literal notranslate"><span class="pre">k-Means</span> <span class="pre">clustering</span></code></p></li>
+<li><p>The abundance maps obtained from decomposition algorithms like
+<code class="docutils literal notranslate"><span class="pre">Singular</span> <span class="pre">Value</span> <span class="pre">Decomposition</span> <span class="pre">(SVD)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Non-negative</span> <span class="pre">matrix</span> <span class="pre">factorization</span> <span class="pre">(NMF)</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="complicated">
+<h3><a class="toc-backref" href="#id20">Complicated?</a><a class="headerlink" href="#complicated" title="Permalink to this headline">¶</a></h3>
+<p>This data schema may seem unnecessarily complicated for very simple / rigid data such as 2D images or 1D spectra.
+However, bear in mind that <strong>this paradigm was designed to represent any information regardless of dimensionality, origin, complexity</strong>, etc.
+Thus, encoding data in this manner will allow seamless sharing, exchange, and interpretation of data.</p>
+</div>
+<div class="section" id="compound-datasets">
+<h3><a class="toc-backref" href="#id21">Compound Datasets</a><a class="headerlink" href="#compound-datasets" title="Permalink to this headline">¶</a></h3>
+<p>There are instances where multiple values are associate with a
+single position and spectroscopic value in a dataset.  In these cases,
+we use the <a class="reference external" href="https://support.hdfgroup.org/HDF5/Tutor/compound.html">compound dataset functionality in HDF5</a>
+to store all of the
+values at each point.  This also allows us to access any combination of
+the values without needing to read all of them.  Pycroscopy actually uses
+compound datasets a lot more frequently than one would think. The need
+and utility of compound datasets are best described with examples:</p>
+<ul>
+<li><p><strong>Color images</strong>: Each position in these datasets contain three (red,
+blue, green) or four (cyan, black, magenta, yellow) values. One would
+naturally be tempted to simply treat these datasets as <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">3</span></code> or <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">4</span></code>
+datasets, (where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the product of the number of <em>rows</em> and <em>columns</em>
+as in the gray-scale image example above) and it certainly is not wrong
+to represent data this way. However,
+storing the data in this manner would mean that the <em>red</em> intensity was
+collected first, followed by the <em>green</em>, and finally by the <em>blue</em>. In
+other words, <strong>a notion of chronology is attached to both the position
+and spectroscopic axes</strong> according to the <strong>USID</strong> definition.
+While the intensities for each color may be acquired sequentially in
+detectors, since we are not aware of the exact sequence we will assume
+that the <em>red</em>, <em>green</em>, and <em>blue</em> values are acquired simultaneously for
+simultaneously.</p>
+<p>In these cases, we store data using <code class="docutils literal notranslate"><span class="pre">compound</span> <span class="pre">datasets</span></code>
+that allow the storage of multiple pieces of data within the same <code class="docutils literal notranslate"><span class="pre">cell</span></code>.
+While this may seem confusing or implausible, remember that computers
+store complex numbers in the same way. The complex numbers have a <em>real</em>
+and an <em>imaginary</em> component just like color images have <em>red</em>, <em>blue</em>,
+and <em>green</em> components that describe a single pixel. Therefore, color
+images in the <strong>USID</strong> representation would be represented by a <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">1</span></code> matrix with
+compound values instead of a <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">3</span></code> matrix with real or integer values.
+For example, one would refer to the <em>red</em> component at a particular position as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">red_value</span> <span class="o">=</span> <span class="n">dataset_name</span><span class="p">[</span><span class="n">position_index</span><span class="p">,</span> <span class="n">spectroscopic_index</span><span class="p">][</span><span class="s1">&#39;red&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Functional fits</strong>: Let’s take the example of a dataset flattened to shape - <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">P</span></code>,
+whose spectra at each location are fitted to a complicated equation. Now, the <code class="docutils literal notranslate"><span class="pre">P</span></code>
+points in the spectra will be represented by <code class="docutils literal notranslate"><span class="pre">S</span></code> coefficients that don’t
+necessarily follow any order. Consequently, the result of the functional
+fit should actually be a <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">1</span></code> dataset where each element is a compound
+value made up of the <code class="docutils literal notranslate"><span class="pre">S</span></code> coefficients. Note that while some form of sequence
+can be forced onto the coefficients if the spectra were fit to polynomial
+functions, the benefits outweigh the drawbacks:</p>
+<ul class="simple">
+<li><p><strong>Slicing</strong>: Storing data in compound datasets circumvents problems associated
+with getting a specific / the <code class="docutils literal notranslate"><span class="pre">kth</span></code> coefficient if the data were stored in a
+real-valued matrix instead.</p></li>
+<li><p><strong>Visualization</strong> also becomes a lot simpler since compound datasets cannot
+be plotted without specifying the component / coefficient of interest. This
+avoids plots with alternating coefficients that are several orders of
+magnitude larger / smaller than each other.</p></li>
+</ul>
+</li>
+</ul>
+<p>While one could represent multiple channels of information simultaneously acquired by instruments
+(for example - height, amplitude, phase channels in atomic force microscopy scan images) using compound datasets,
+this is <strong>not</strong> the intended purpose of compound datasets. We use recommend storing each
+channel of information separately for consistency across scientific disciplines.
+For example, there are modalities in microscopy where some channels provide high
+resolution topography data while others provide low-resolution but spectroscopy data.</p>
+<p>For more information on compound datasets see the
+<a class="reference external" href="http://docs.h5py.org/en/latest/high/dataset.html#reading-writing-data">h5py Datasets documentation</a>
+from the HDF Group.</p>
+</div>
+<div class="section" id="videos">
+<h3><a class="toc-backref" href="#id22">Videos</a><a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h3>
+<p>While USID provides an unambiguous and single solution for representing data, videos come into a gray area with two
+plausible solutions rather than one. A video with <code class="docutils literal notranslate"><span class="pre">S</span></code> frames each containing an image of shape <code class="docutils literal notranslate"><span class="pre">U</span> <span class="pre">x</span> <span class="pre">V</span></code> can be
+represented in USID either as a <code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">x</span> <span class="pre">UV</span></code> dataset or a <code class="docutils literal notranslate"><span class="pre">UV</span> <span class="pre">x</span> <span class="pre">S</span></code> dataset.</p>
+<p>Those who strictly believe that the data for the <code class="docutils literal notranslate"><span class="pre">N+1</span></code> th observation (row in the USID <code class="docutils literal notranslate"><span class="pre">Main</span></code> dataset) is always
+acquired after all the data for the <code class="docutils literal notranslate"><span class="pre">N</span></code> th observation (row in the USID <code class="docutils literal notranslate"><span class="pre">Main</span></code> dataset) may prefer the <code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">x</span> <span class="pre">UV</span></code>
+form. In other words, at time <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">=</span> <span class="pre">0</span></code>, a 2D image of shape <code class="docutils literal notranslate"><span class="pre">U</span> <span class="pre">x</span> <span class="pre">V</span></code> is acquired. Subsequently, the next observation
+is at time <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">=</span> <span class="pre">1</span></code> when another 2D image is acquired. The chronology of the observations (frames in the movie) are
+indisputable. Thus, the data within each observation (<code class="docutils literal notranslate"><span class="pre">U</span> <span class="pre">x</span> <span class="pre">V</span></code> image) would need to be flattened along the <em>horizontal</em>
+axis per the examples above. The observations (frames in the movie) themselves would be stacked along the <em>vertical</em>
+axis. This representation would confuse the reader since the <code class="docutils literal notranslate"><span class="pre">Position</span></code> and <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span></code> dimensions are switched.
+Here, the <em>physical</em> position dimensions of the camera sensor (<code class="docutils literal notranslate"><span class="pre">U</span></code> and <code class="docutils literal notranslate"><span class="pre">V</span></code>) would actually be the spectroscopic
+dimensions in USID whereas time, which is typically a spectroscopic dimension in USID is treated as a Position dimension
+instead. We believe that this would be the correct representation of a movie in USID.
+We were very much aware of this potential problem and were originally planning on adopting the vocabulary used by the
+data science community of <code class="docutils literal notranslate"><span class="pre">Instance</span></code> or <code class="docutils literal notranslate"><span class="pre">Example</span></code> and <code class="docutils literal notranslate"><span class="pre">Features</span></code>. However, we realize that users not familiar
+with this nomenclature may be confused.</p>
+<p>Those who prefer to think of movies as maps of spectra may prefer the <code class="docutils literal notranslate"><span class="pre">UV</span> <span class="pre">x</span> <span class="pre">S</span></code> representation. However, the chronology
+would be misrepresented or lost in such a USID representation. Nonetheless, such people may argue that this
+representation is more in line with convention although it is at odds with the rules laid by USID.</p>
+<p>The above philosophies would still hold true regardless of whether the data recorded at each time step were a 2D image,
+a 1D spectrum or a N-dimensional hypercube.</p>
+</div>
+</div>
+<div class="section" id="ancillary-datasets">
+<h2><a class="toc-backref" href="#id23"><code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> Datasets</a><a class="headerlink" href="#ancillary-datasets" title="Permalink to this headline">¶</a></h2>
+<p>So far we have explained how the (<code class="docutils literal notranslate"><span class="pre">main</span></code>) dataset of interest can be flattened and represented
+regardless of its origin, size, dimensionality, etc. In order to make this
+<code class="docutils literal notranslate"><span class="pre">main</span></code> dataset <strong>self-explanatory</strong>, additional pieces of information are required.
+For example, while the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset preserves the data of interest, information regarding the
+original dimensionality of the data or the combination of parameters corresponding to each
+observation is not captured.</p>
+<p>In order to capture such vital information, each <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset is always accompanied by
+<strong>four</strong> <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets. These are the:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code> and <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code> that describe the index and
+value of any given row or spatial position in the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code> and <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code> that describe the
+index and values all columns in the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset for all spectroscopic dimensions.</p></li>
+</ul>
+<p>The pair of <code class="docutils literal notranslate"><span class="pre">Values</span></code> datasets are analogous to legends for maps. In other words, the pair of
+<code class="docutils literal notranslate"><span class="pre">Values</span></code> datasets <strong>provide the combination of the values for each dimension</strong> / variable
+that correspond to a particular data point in the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset. For example, one
+would be able to understand readily that a particular data point in the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset
+was acquired for the reference values of <em>Frequency</em> of 315 kHz, <em>Temperature</em> of 400 K
+from the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code> dataset and location <em>X</em> of 7.125 microns and <em>Y</em> of
+480 nanometers from the <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code> dataset.</p>
+<p>The pair of <code class="docutils literal notranslate"><span class="pre">Indices</span></code> datasets are essentially <strong>counters for each position
+and spectroscopic dimension</strong> / variable. Continuing the example presented for the <code class="docutils literal notranslate"><span class="pre">Values</span></code>
+datasets, let’s assume that the data was acquired as a function of all unique combinations of
+<code class="docutils literal notranslate"><span class="pre">37</span></code> <em>Frequency</em> values, <code class="docutils literal notranslate"><span class="pre">12</span></code> <em>Temperatures</em>, <code class="docutils literal notranslate"><span class="pre">64</span></code> locations in the <em>X</em> direction
+and <code class="docutils literal notranslate"><span class="pre">128</span></code> values in the <em>Y</em> direction. Then, the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code> dataset would
+instruct that the given data point in the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset corresponds to the <code class="docutils literal notranslate"><span class="pre">13th</span></code>
+<em>Frequency</em> value and <code class="docutils literal notranslate"><span class="pre">5th</span></code> <em>Temperature</em> value. In the same way, the <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code>
+dataset would show that the data point of interest corresponds to the <code class="docutils literal notranslate"><span class="pre">47th</span></code> value of <em>X</em>
+and <code class="docutils literal notranslate"><span class="pre">106th</span></code> value of <em>Y</em>.</p>
+<p>The pair of <code class="docutils literal notranslate"><span class="pre">Indices</span></code> datasets are critical for explaining:</p>
+<ul class="simple">
+<li><p>the original dimensionality of the dataset</p></li>
+<li><p>how to reshape the data back to its N dimensional form</p></li>
+</ul>
+<p>Much like <code class="docutils literal notranslate"><span class="pre">main</span></code> datasets, the <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets are also two
+dimensional matrices regardless of the number of <code class="docutils literal notranslate"><span class="pre">position</span></code> or
+<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code>. Given a <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset with <code class="docutils literal notranslate"><span class="pre">N</span></code> positions,
+each containing <code class="docutils literal notranslate"><span class="pre">P</span></code> spectral values (shape = (<code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">P</span></code>)), and having
+<code class="docutils literal notranslate"><span class="pre">U</span></code> <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code> and  <code class="docutils literal notranslate"><span class="pre">V</span></code> <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code>:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code> and <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code> datasets would both of the
+same size of <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">U</span></code>, where <code class="docutils literal notranslate"><span class="pre">U</span></code> is the number of <code class="docutils literal notranslate"><span class="pre">position</span>
+<span class="pre">dimensions</span></code>. The <strong>columns would be arranged in descending order of rate of
+change</strong>. In other words, the first column would be the fastest changing
+position dimension and the last column would be the slowest. <strong>Each position dimension gets it’s own column</strong>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code> and <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code> dataset would
+both be <code class="docutils literal notranslate"><span class="pre">V</span> <span class="pre">x</span> <span class="pre">P</span></code> in shape, where <code class="docutils literal notranslate"><span class="pre">V</span></code> is the number of <code class="docutils literal notranslate"><span class="pre">spectroscopic</span>
+<span class="pre">dimensions</span></code>. Similarly to the <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code>, the first row would be
+the fastest changing <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code> while the last row would be
+the slowest varying dimension. <strong>Each spectroscopic dimension gets it’s own row</strong>.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets are better illustrated via a few examples. We will
+be continuing with the same examples used when illustrating the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset.</p>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id24">Spectrum</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Let’s assume that data points were collected as a function of 5 values of the (sole) variable / <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code> -
+<em>Frequency</em>.  In that case, the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code> dataset would be of size <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">x</span> <span class="pre">5</span></code> (one row for the single
+<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code> and eight columns for each of the reference <em>Frequency</em> steps.
+Let’s assume that the data was collected as a function of <em>Frequency</em> over a band ranging from <code class="docutils literal notranslate"><span class="pre">300</span></code> to <code class="docutils literal notranslate"><span class="pre">320</span></code> kHz.
+In that case, the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code> would be as shown below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Frequency</strong></p></td>
+<td><p>300</p></td>
+<td><p>305</p></td>
+<td><p>310</p></td>
+<td><p>315</p></td>
+<td><p>320</p></td>
+</tr>
+</tbody>
+</table>
+<p>This means that for all positions in the <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset, the <code class="docutils literal notranslate"><span class="pre">4th</span></code> column would always correspond to data collected
+for the <em>Frequency</em> of <code class="docutils literal notranslate"><span class="pre">315</span> <span class="pre">kHz</span></code>.</p>
+<p>As the name suggests, the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code> dataset only shows the indices for the steps in the dimension.
+In this particular case, the dataset is trivial and just a linearly increasing array.</p>
+<p>Note that indices start from <code class="docutils literal notranslate"><span class="pre">0</span></code> instead of <code class="docutils literal notranslate"><span class="pre">1</span></code> and
+end at <code class="docutils literal notranslate"><span class="pre">5-1</span></code> instead of <code class="docutils literal notranslate"><span class="pre">5</span></code> in line with common programming languages such as <em>C</em> or <em>python</em> as shown below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Frequency</strong></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+<p>Given that the spectrum only had a single <em>arbitrary</em> <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimension</span></code> which was varied over a single (arbitrary)
+value, the <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code> and <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code> datasets would have a shape of <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">x</span> <span class="pre">1</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>arb.</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>arb.</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The interested reader is recommended to explore
+<a class="reference external" href="./auto_examples/plot_1D_spectrum.html">this interactive example</a> on actual data.</p>
+</div>
+</div>
+<div class="section" id="gray-scale-image">
+<h3><a class="toc-backref" href="#id25">Gray-scale image</a><a class="headerlink" href="#gray-scale-image" title="Permalink to this headline">¶</a></h3>
+<p>A simple gray-scale image with <code class="docutils literal notranslate"><span class="pre">X</span></code> pixels in the horizontal and <code class="docutils literal notranslate"><span class="pre">Y</span></code> pixels in the vertical
+direction would have ancillary position
+datasets of shape <code class="docutils literal notranslate"><span class="pre">X*Y</span> <span class="pre">x</span> <span class="pre">2</span></code>. The first column in the ancillary position
+datasets would correspond to the index / values of the dimension - <code class="docutils literal notranslate"><span class="pre">X</span></code>
+(assuming that it is the dimension that varies fastest)
+and the second column in the ancillary position dataset would be the dimension - <code class="docutils literal notranslate"><span class="pre">Y</span></code>
+assuming that the data was collected column-by-column and then row-by-row just as in the example above.</p>
+<p>If the original image had 3 pixels in the horizontal direction and 2 pixels in the vertical direction,
+the corresponding <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code> dataset would be:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>X</p></th>
+<th class="head"><p>Y</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the index for <code class="docutils literal notranslate"><span class="pre">X</span></code> is reset to <code class="docutils literal notranslate"><span class="pre">0</span></code> when <code class="docutils literal notranslate"><span class="pre">Y</span></code> is incremented from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> in the fourth row.
+As mentioned earlier, the data in such <code class="docutils literal notranslate"><span class="pre">Indices</span></code> datasets are essentially counters.</p>
+<p>Correspondingly, if the measurements were performed at <code class="docutils literal notranslate"><span class="pre">X</span></code> locations:
+<code class="docutils literal notranslate"><span class="pre">0.0,</span> <span class="pre">1.5,</span> <span class="pre">and</span> <span class="pre">3.0</span></code> <em>microns</em> and <code class="docutils literal notranslate"><span class="pre">Y</span></code> locations: <code class="docutils literal notranslate"><span class="pre">-70</span></code> and <code class="docutils literal notranslate"><span class="pre">23</span></code> <em>nanometers</em>,
+the <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code> dataset may look like the table below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>X</p></th>
+<th class="head"><p>Y</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.0</p></td>
+<td><p>-70.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>1.5</p></td>
+<td><p>-70.0</p></td>
+</tr>
+<tr class="row-even"><td><p>3.0</p></td>
+<td><p>-70.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.0</p></td>
+<td><p>23.0</p></td>
+</tr>
+<tr class="row-even"><td><p>1.5</p></td>
+<td><p>23.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>3.0</p></td>
+<td><p>23.0</p></td>
+</tr>
+</tbody>
+</table>
+<p>Thus, the <code class="docutils literal notranslate"><span class="pre">5th</span></code> row in the <code class="docutils literal notranslate"><span class="pre">main</span> <span class="pre">dataset</span></code> for this gray-scale image would correspond to data collected
+at <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">=</span> <span class="pre">1.5</span> <span class="pre">microns</span></code> and <code class="docutils literal notranslate"><span class="pre">Y</span> <span class="pre">=</span> <span class="pre">23</span> <span class="pre">nanometers</span></code> according to the <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code> dataset.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Y</span></code> dimensions have <strong>different units</strong> - microns and nanometers.
+Pycroscopy has been designed to handle variations in the units for
+each of these dimensions. Details regarding how and where to store
+the information regarding the <code class="docutils literal notranslate"><span class="pre">labels</span></code> (‘X’, ‘Y’) and <code class="docutils literal notranslate"><span class="pre">units</span></code> for
+these dimensions (‘um’, ‘nm’) will be discussed in the <code class="docutils literal notranslate"><span class="pre">Implementation</span></code> section.</p>
+<p>Similar to the <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code> for a spectrum, gray-scale images only have a single <em>arbitrary</em>
+<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code>. Thus, both <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span></code> datasets have shape of <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">x</span> <span class="pre">1</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 31%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>arb.</strong></p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 31%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>arb.</strong></p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The interested reader is recommended to
+explore <a class="reference external" href="./auto_examples/plot_2D_image.html">this interactive example</a> on actual data.</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id26">Spectral maps</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Let’s continue the example on <strong>spectral maps</strong>, which has two <code class="docutils literal notranslate"><span class="pre">position</span>
+<span class="pre">dimensions</span></code> - <em>X</em> and <em>Y</em>, and one <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimension</span></code> - <em>Frequency</em>.
+If the dataset was varied over <code class="docutils literal notranslate"><span class="pre">3</span></code> values of <em>X</em>, <code class="docutils literal notranslate"><span class="pre">2</span></code> values of <em>Y</em> and <code class="docutils literal notranslate"><span class="pre">5</span></code> values of <em>Frequency</em>, the
+<code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets would be based on the solutions for the two examples above:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>X</p></th>
+<th class="head"><p>Y</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>X</p></th>
+<th class="head"><p>Y</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.0</p></td>
+<td><p>-70.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>1.5</p></td>
+<td><p>-70.0</p></td>
+</tr>
+<tr class="row-even"><td><p>3.0</p></td>
+<td><p>-70.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.0</p></td>
+<td><p>23.0</p></td>
+</tr>
+<tr class="row-even"><td><p>1.5</p></td>
+<td><p>23.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>3.0</p></td>
+<td><p>23.0</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Frequency</strong></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code>:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Frequency</strong></p></td>
+<td><p>300</p></td>
+<td><p>305</p></td>
+<td><p>310</p></td>
+<td><p>315</p></td>
+<td><p>320</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The interested reader is recommended to
+explore <a class="reference external" href="./auto_examples/plot_3D_spectral_image.html">this interactive example</a> on actual data.</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id27">High dimensional data</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>Continuing with the expansion of the <strong>spectral maps</strong> example - if the data was recorded as a function of <code class="docutils literal notranslate"><span class="pre">3</span></code>
+<em>Temperatures</em> in addition to recording data as a function of <em>Frequency</em> as in the above example, we wold have two
+<code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code> - <em>Frequency</em>, and <em>Temperature</em>. Thus, the <code class="docutils literal notranslate"><span class="pre">ancillary</span> <span class="pre">spectroscopic</span></code> datasets would
+now have a shape of <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">5*3</span></code> instead of the simpler <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">x</span> <span class="pre">5</span></code>. The value <code class="docutils literal notranslate"><span class="pre">2</span></code> on the first index corresponds to
+the two <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code> and the longer (<code class="docutils literal notranslate"><span class="pre">15</span></code> instead of <code class="docutils literal notranslate"><span class="pre">5</span></code>) second axis corresponds to the fact
+that the spectra is now recorded thrice at each <em>Temperature</em> (once for each <em>Frequency</em>). Assuming that the <em>Frequency</em>
+varies faster than the <em>Temperature</em> dimension (i.e.- the <em>Frequency</em> is varied from <code class="docutils literal notranslate"><span class="pre">300</span></code> to <code class="docutils literal notranslate"><span class="pre">320</span></code> for a
+<em>Temperature</em> of <code class="docutils literal notranslate"><span class="pre">30</span> <span class="pre">C</span></code>, <strong>then</strong> the <em>Frequency</em> is varied from <code class="docutils literal notranslate"><span class="pre">300</span></code> to <code class="docutils literal notranslate"><span class="pre">320</span></code> for a <em>Temperature</em> of <code class="docutils literal notranslate"><span class="pre">40</span> <span class="pre">C</span></code>
+and so on), the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code> would be as follows:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Frequency</strong></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Temperature</strong></p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+</tr>
+</tbody>
+</table>
+<p>Correspondingly, the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Values</span></code> would look like:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Frequency</strong></p></td>
+<td><p>300</p></td>
+<td><p>305</p></td>
+<td><p>310</p></td>
+<td><p>315</p></td>
+<td><p>320</p></td>
+<td><p>300</p></td>
+<td><p>305</p></td>
+<td><p>310</p></td>
+<td><p>315</p></td>
+<td><p>320</p></td>
+<td><p>300</p></td>
+<td><p>305</p></td>
+<td><p>310</p></td>
+<td><p>315</p></td>
+<td><p>320</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Temperature</strong></p></td>
+<td><p>30</p></td>
+<td><p>30</p></td>
+<td><p>30</p></td>
+<td><p>30</p></td>
+<td><p>30</p></td>
+<td><p>40</p></td>
+<td><p>40</p></td>
+<td><p>40</p></td>
+<td><p>40</p></td>
+<td><p>40</p></td>
+<td><p>50</p></td>
+<td><p>50</p></td>
+<td><p>50</p></td>
+<td><p>50</p></td>
+<td><p>50</p></td>
+</tr>
+</tbody>
+</table>
+<p>Since the manner and values over which the positions are varied remains unchanged from the <em>spectral maps</em> example,
+the <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code> and <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Values</span></code> datasets for this example would be identical those of the <em>spectral maps</em> example</p>
+<p>A simple glance at the shape of the <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets for this (or any) example would be enough to
+reveal that the data has two <code class="docutils literal notranslate"><span class="pre">position</span> <span class="pre">dimensions</span></code> (two columns in the <code class="docutils literal notranslate"><span class="pre">Position</span> <span class="pre">Indices</span></code> dataset) and
+two <code class="docutils literal notranslate"><span class="pre">spectroscopic</span> <span class="pre">dimensions</span></code> (two rows in the <code class="docutils literal notranslate"><span class="pre">Spectroscopic</span> <span class="pre">Indices</span></code> dataset)
+dataset)</p>
+<p>In the same manner, additional dimensions can be added to the <code class="docutils literal notranslate"><span class="pre">main</span></code> and appropriate <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets
+thus proving that this data schema can indeed accommodate data of any size, complexity, or dimensionality.</p>
+</div>
+</div>
+<div class="section" id="channels">
+<h2><a class="toc-backref" href="#id28">Channels</a><a class="headerlink" href="#channels" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>USID</strong> schema also allows the representation and capture of <strong>information acquired
+simultaneously from multiple sources</strong> through <code class="docutils literal notranslate"><span class="pre">Channels</span></code>.
+Each <code class="docutils literal notranslate"><span class="pre">Channel</span></code> would contain a <strong>separate</strong> <code class="docutils literal notranslate"><span class="pre">main</span></code> dataset. <code class="docutils literal notranslate"><span class="pre">Ancillary</span></code> datasets
+can be shared across channels if the position or spectroscopic dimensions are identical.</p>
+<p>As alluded to earlier, the most popular example many people can relate to are the various channels
+of information recorded during a conventional scanning probe microscopy raster scan (<em>Height</em>, <em>Amplitude</em>, <em>Phase</em>).
+For this example, all the <code class="docutils literal notranslate"><span class="pre">channels</span></code> could share the same set of four <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets.</p>
+<p>It is not necessary that rate of acquisition match across <code class="docutils literal notranslate"><span class="pre">channels</span></code>. For example, one
+<code class="docutils literal notranslate"><span class="pre">channel</span></code> could be a high-resolution topography scan (similar to 2D gray-scale image)
+while another <code class="docutils literal notranslate"><span class="pre">channel</span></code> could contain spectra collected at each location on a
+<strong>coarser</strong> grid of positions (3D spectral-map dataset). In this case, the two
+<code class="docutils literal notranslate"><span class="pre">channels</span></code> may not be able to share <code class="docutils literal notranslate"><span class="pre">ancillary</span></code> datasets.</p>
+<p>Specifics regarding the implementation of different
+channels will be discussed in a later section.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="file_format.html" class="btn btn-neutral float-right" title="File Format" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="nomenclature.html" class="btn btn-neutral float-left" title="Nomenclature" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Stephen Jesse, Suhas Somnath and Chris Smith.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
