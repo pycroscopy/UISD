@@ -1,5 +1,5 @@
-User Guide
-==========
+Examples
+========
 
 This folder contains notebooks that illustrate how certain common data types are represented and stored in the USID format.
 
