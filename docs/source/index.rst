@@ -7,6 +7,13 @@ Welcome to USID documentation!
 ==============================
 **Motivaton, specifications, implementation, and guidelines for the Universal Spectroscopic and Imaging Data (USID) model**
 
+.. attention::
+
+    If your data has a clear N-dimensional form, consider using
+    `NSID <https://pycroscopy.github.io/pyNSID/nsid.html>`_ and
+    `pyNSID <https://pycroscopy.github.io/pyNSID/about.html>`_
+    as simpler and more user-friendly alternatives to USID and pyUSID.
+
 Site index
 ----------
 .. toctree::

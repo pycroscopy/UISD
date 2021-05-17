@@ -1,6 +1,13 @@
 Universal Spectroscopy and Imaging Data  (USID)
 ===============================================
 
+.. attention::
+
+    If your data has a clear N-dimensional form, consider using
+    `NSID <https://pycroscopy.github.io/pyNSID/nsid.html>`_ and
+    `pyNSID <https://pycroscopy.github.io/pyNSID/about.html>`_
+    as simpler and more user-friendly alternatives to USID and pyUSID.
+
 About
 -----
 USID is an open, community-driven, self-describing, and standardized schema for representing imaging and spectroscopy data of any size, dimensionality,
@@ -21,11 +28,6 @@ Please see our `Arxiv <https://arxiv.org/abs/1903.09515>`_ **paper** for more in
 Using h5USID files
 ------------------
 * `pyUSID <../pyUSID/about.html>`_ provides a convenient python interface to read and write to h5USID files.
-
-Related projects
-----------------
-* `pycroscopy <../pycroscopy/about.html>`_  has several tools for `translating <../pycroscopy/translators.html>`_ data
-  from proprietary files generated from popular scanning probe and scanning transmission electron microscopes into h5USID files
 
 More information
 ----------------
