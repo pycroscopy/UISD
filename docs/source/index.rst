@@ -9,23 +9,26 @@ Welcome to USID documentation!
 
 Site index
 ----------
-.. currentmodule:: index
-
-.. autosummary::
-   :template: module.rst
-
 .. toctree::
+   :glob:
    :maxdepth: 1
+   :caption: USID
 
    about
    motivation
    nomenclature
    usid_model
    file_format
-   auto_examples/index
    h5_usid
    metadata
    advanced_topics
    faq
 
-* :ref:`search`
+* :ref:`modindex`
+
+.. toctree::
+   :glob:
+   :maxdepth: 2
+   :caption: Examples
+
+   notebooks/**/index
